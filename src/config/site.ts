@@ -107,7 +107,7 @@ export const siteConfig = {
 
   technology: {
     eyebrow: "Technology",
-    title: "Five layers of integrated intelligence.",
+    title: "Six layers of integrated intelligence.",
     items: [
       {
         title: "Ground-coupled GPR",
@@ -133,6 +133,11 @@ export const siteConfig = {
         title: "Confidence-scored outputs",
         description:
           "Every detected utility gets a classification confidence, material estimate, and depth range \u2014 enabling risk-based excavation decisions.",
+      },
+      {
+        title: "Autonomous path planning",
+        description:
+          "Coverage-optimal navigation autonomously drives scan patterns across the site, ensuring complete subsurface mapping without manual guidance.",
       },
     ],
   },

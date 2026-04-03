@@ -17,7 +17,7 @@ export function HeroSection() {
   )}`;
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-x-hidden">
       {/* Precision grid background */}
       <div className="pointer-events-none absolute inset-0 mesh-background opacity-30 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
 
@@ -25,6 +25,9 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-1/3 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/[0.06] blur-[120px]" />
       </div>
+
+      {/* Bottom edge fade — clean transition into next section */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-24 bg-gradient-to-t from-background to-transparent" />
 
       {/* 3D Rover Scene */}
       <div className="absolute inset-0 top-[5vh]">

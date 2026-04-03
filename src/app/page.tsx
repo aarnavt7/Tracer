@@ -9,6 +9,7 @@ import {
   FileOutput,
   Layers,
   MapPin,
+  Navigation,
   Radio,
   RotateCw,
   Scan,
@@ -32,7 +33,7 @@ import { siteConfig } from "@/config/site";
 const PROBLEM_ICONS = [EyeOff, Clock, AlertTriangle];
 const STEP_ICONS = [Scan, Layers, Target, FileOutput];
 const BENEFIT_ICONS = [Zap, RotateCw, Cpu, FileCheck2];
-const TECH_ICONS = [Radio, Activity, MapPin, Cpu, ShieldCheck];
+const TECH_ICONS = [Radio, Activity, MapPin, Cpu, ShieldCheck, Navigation];
 
 export default function Home() {
   const contactHref = `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(
