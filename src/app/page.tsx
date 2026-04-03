@@ -50,7 +50,7 @@ export default function Home() {
       <HeroSection />
 
       {/* ─── PROBLEM ──────────────────────────────────────── */}
-      <section className="relative py-24 lg:py-32">
+      <section className="relative py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <AnimatedSection>
             <p className="font-heading text-xs font-medium uppercase tracking-[0.3em] text-primary">
@@ -100,7 +100,7 @@ export default function Home() {
       </section>
 
       {/* ─── HOW IT WORKS ─────────────────────────────────── */}
-      <section id="solution" className="relative py-24 lg:py-32">
+      <section id="solution" className="relative py-16 lg:py-24">
         {/* Subtle divider glow */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
@@ -139,7 +139,7 @@ export default function Home() {
       </section>
 
       {/* ─── PRODUCT VISUALIZATION ────────────────────────── */}
-      <section className="relative py-24 lg:py-32">
+      <section className="relative py-16 lg:py-24">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -178,7 +178,7 @@ export default function Home() {
       </section>
 
       {/* ─── BENEFITS ─────────────────────────────────────── */}
-      <section id="about" className="relative py-24 lg:py-32">
+      <section id="about" className="relative py-16 lg:py-24">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -220,7 +220,7 @@ export default function Home() {
       </section>
 
       {/* ─── TECHNOLOGY ───────────────────────────────────── */}
-      <section id="technology" className="relative py-24 lg:py-32">
+      <section id="technology" className="relative py-16 lg:py-24">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
         {/* Background grid accent */}
@@ -258,7 +258,7 @@ export default function Home() {
       </section>
 
       {/* ─── FINAL CTA ────────────────────────────────────── */}
-      <section id="contact" className="relative py-24 lg:py-32">
+      <section id="contact" className="relative py-16 lg:py-24">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
         {/* Atmospheric backdrop */}

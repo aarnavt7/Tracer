@@ -124,7 +124,7 @@ export const siteConfig = {
       alt: "Engineering-aligned utility map output for CAD or GIS workflows.",
     },
     {
-      src: "/images/MapImage3.png",
+      src: "/images/MapImage3.jpg",
       alt: "Subsurface utility map with classified buried lines and confidence visualization.",
     },
   ] as const,
