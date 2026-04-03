@@ -110,10 +110,6 @@ export const siteConfig = {
   },
 
   demoVideo: {
-    sectionEyebrow: "See Tracer in context",
-    sectionTitle: "From the field to the map.",
-    sectionDescription:
-      "Real sites, autonomous scanning, and deliverables your team can build on — before the four-step workflow below.",
     overlayEyebrow: "Demo",
     overlayTitle: "Tracer in motion",
     overlayCaption:

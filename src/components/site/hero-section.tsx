@@ -30,8 +30,16 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-24 bg-gradient-to-t from-background to-transparent" />
 
       {/* 3D Rover Scene */}
-      <div className="absolute inset-0 top-[5vh]">
+      <div className="absolute inset-0 top-[5vh] z-0">
         <RoverScene />
+      </div>
+
+      {/* Upper-center scrim: separates headline from busy 3D / orange grid */}
+      <div
+        className="pointer-events-none absolute inset-0 z-[5]"
+        aria-hidden
+      >
+        <div className="absolute inset-x-0 top-0 h-[min(58vh,520px)] bg-[radial-gradient(ellipse_78%_88%_at_50%_16%,oklch(0.055_0.022_260/0.78)_0%,oklch(0.075_0.018_260/0.42)_42%,transparent_76%)]" />
       </div>
 
       {/* Content overlay */}
@@ -46,7 +54,7 @@ export function HeroSection() {
           <span className="block text-gradient">
             {siteConfig.hero.headline[0]}
           </span>
-          <span className="block text-foreground/90">
+          <span className="block text-foreground/90 [text-shadow:0_2px_28px_oklch(0.06_0.02_260/0.95),0_1px_3px_oklch(0.04_0.02_260/0.85)]">
             {siteConfig.hero.headline[1]}
           </span>
         </motion.h1>

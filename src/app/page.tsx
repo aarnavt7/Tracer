@@ -99,25 +99,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── DEMO VIDEO ─────────────────────────────────── */}
-      <section className="relative py-24 lg:py-32">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
-
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <AnimatedSection>
-            <SectionHeading
-              eyebrow={siteConfig.demoVideo.sectionEyebrow}
-              title={siteConfig.demoVideo.sectionTitle}
-              description={siteConfig.demoVideo.sectionDescription}
-            />
-          </AnimatedSection>
-
-          <AnimatedSection className="mt-16" delay={0.1}>
-            <DemoVideoSection />
-          </AnimatedSection>
-        </div>
-      </section>
-
       {/* ─── HOW IT WORKS ─────────────────────────────────── */}
       <section id="solution" className="relative py-24 lg:py-32">
         {/* Subtle divider glow */}
@@ -209,7 +190,11 @@ export default function Home() {
             />
           </AnimatedSection>
 
-          <StaggerContainer className="mt-16 grid gap-6 md:grid-cols-2">
+          <AnimatedSection className="mt-14 lg:mt-16" delay={0.08}>
+            <DemoVideoSection />
+          </AnimatedSection>
+
+          <StaggerContainer className="mt-14 grid gap-6 md:grid-cols-2 lg:mt-16">
             {siteConfig.benefits.items.map((item, i) => {
               const Icon = BENEFIT_ICONS[i];
               return (

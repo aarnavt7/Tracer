@@ -1,8 +1,8 @@
 "use client";
 
-import { ContactShadows, Environment } from "@react-three/drei";
+import { ContactShadows, Environment, Grid } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense, useEffect, useMemo, useRef } from "react";
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
 const C = {
@@ -20,6 +20,9 @@ const C = {
   glowOrange: "#e8943c",
 };
 
+/** Tread rings + rubber sheen read as molded polymer; no external textures (PBR + geometry). */
+const TREAD_RADII = [0.136, 0.144, 0.152, 0.158] as const;
+
 function Wheel({
   position,
   mirror,
@@ -30,42 +33,74 @@ function Wheel({
   const capX = mirror ? -0.048 : 0.048;
   return (
     <group position={position}>
-      <mesh rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.15, 0.15, 0.08, 24]} />
-        <meshStandardMaterial
+      <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
+        <cylinderGeometry args={[0.15, 0.15, 0.08, 48]} />
+        <meshPhysicalMaterial
           color={C.tire}
-          roughness={0.88}
-          metalness={0.04}
+          roughness={0.94}
+          metalness={0}
+          clearcoat={0.04}
+          clearcoatRoughness={0.98}
+          sheen={0.55}
+          sheenRoughness={0.82}
+          sheenColor="#7a3d22"
         />
       </mesh>
+      {TREAD_RADII.map((radius, i) => (
+        <mesh
+          key={`tr-${radius}`}
+          rotation={[0, 0, Math.PI / 2]}
+          castShadow
+        >
+          <torusGeometry args={[radius, 0.0042, 5, 56]} />
+          <meshPhysicalMaterial
+            color={C.tireDeep}
+            roughness={0.97}
+            metalness={0}
+            clearcoat={0.02}
+            clearcoatRoughness={1}
+            sheen={0.35}
+            sheenRoughness={0.9}
+            sheenColor="#5c3018"
+          />
+        </mesh>
+      ))}
       {[-0.03, 0, 0.03].map((off) => (
         <mesh
           key={off}
           position={[off, 0, 0]}
           rotation={[0, 0, Math.PI / 2]}
+          castShadow
         >
-          <torusGeometry args={[0.15, 0.003, 4, 24]} />
-          <meshStandardMaterial
+          <torusGeometry args={[0.15, 0.0028, 4, 40]} />
+          <meshPhysicalMaterial
             color={C.tireDeep}
-            roughness={0.92}
-            metalness={0.02}
+            roughness={0.96}
+            metalness={0}
+            sheen={0.28}
+            sheenRoughness={0.92}
+            sheenColor="#4a2814"
           />
         </mesh>
       ))}
-      <mesh rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.068, 0.068, 0.085, 16]} />
-        <meshStandardMaterial
+      <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
+        <cylinderGeometry args={[0.068, 0.068, 0.085, 24]} />
+        <meshPhysicalMaterial
           color={C.darkMid}
           roughness={0.35}
-          metalness={0.5}
+          metalness={0.55}
+          clearcoat={0.25}
+          clearcoatRoughness={0.55}
         />
       </mesh>
-      <mesh position={[capX, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.035, 0.035, 0.006, 8]} />
-        <meshStandardMaterial
+      <mesh position={[capX, 0, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
+        <cylinderGeometry args={[0.035, 0.035, 0.006, 12]} />
+        <meshPhysicalMaterial
           color={C.dark}
           roughness={0.25}
-          metalness={0.6}
+          metalness={0.65}
+          clearcoat={0.4}
+          clearcoatRoughness={0.45}
         />
       </mesh>
     </group>
@@ -75,48 +110,58 @@ function Wheel({
 function RoverBody() {
   return (
     <group rotation={[0, Math.PI / 8, 0]}>
-      <mesh position={[0, 0.46, 0]}>
-        <cylinderGeometry args={[0.48, 0.54, 0.42, 8]} />
-        <meshStandardMaterial
+      <mesh position={[0, 0.46, 0]} castShadow>
+        <cylinderGeometry args={[0.48, 0.54, 0.42, 12]} />
+        <meshPhysicalMaterial
           color={C.body}
-          roughness={0.25}
-          metalness={0.85}
-        />
-      </mesh>
-      <mesh position={[0, 0.26, 0]}>
-        <cylinderGeometry args={[0.55, 0.56, 0.06, 8]} />
-        <meshStandardMaterial
-          color={C.dark}
-          roughness={0.3}
-          metalness={0.5}
-        />
-      </mesh>
-      <mesh position={[0, 0.32, 0]}>
-        <cylinderGeometry args={[0.545, 0.55, 0.03, 8]} />
-        <meshStandardMaterial
-          color="#2a2018"
-          roughness={0.25}
-          metalness={0.65}
-          emissive={C.accentOrange}
-          emissiveIntensity={0.35}
-        />
-      </mesh>
-      <mesh position={[0, 0.60, 0]}>
-        <cylinderGeometry args={[0.485, 0.49, 0.02, 8]} />
-        <meshStandardMaterial
-          color="#2a2018"
-          roughness={0.25}
-          metalness={0.65}
-          emissive={C.accentOrange}
-          emissiveIntensity={0.15}
-        />
-      </mesh>
-      <mesh position={[0, 0.68, 0]}>
-        <cylinderGeometry args={[0.42, 0.48, 0.03, 8]} />
-        <meshStandardMaterial
-          color={C.bodyLight}
           roughness={0.22}
           metalness={0.88}
+          clearcoat={0.45}
+          clearcoatRoughness={0.35}
+        />
+      </mesh>
+      <mesh position={[0, 0.26, 0]} castShadow>
+        <cylinderGeometry args={[0.55, 0.56, 0.06, 12]} />
+        <meshPhysicalMaterial
+          color={C.dark}
+          roughness={0.28}
+          metalness={0.55}
+          clearcoat={0.3}
+          clearcoatRoughness={0.5}
+        />
+      </mesh>
+      <mesh position={[0, 0.32, 0]} castShadow>
+        <cylinderGeometry args={[0.545, 0.55, 0.03, 12]} />
+        <meshPhysicalMaterial
+          color="#2a2018"
+          roughness={0.22}
+          metalness={0.68}
+          emissive={C.accentOrange}
+          emissiveIntensity={0.32}
+          clearcoat={0.55}
+          clearcoatRoughness={0.28}
+        />
+      </mesh>
+      <mesh position={[0, 0.6, 0]} castShadow>
+        <cylinderGeometry args={[0.485, 0.49, 0.02, 12]} />
+        <meshPhysicalMaterial
+          color="#2a2018"
+          roughness={0.22}
+          metalness={0.68}
+          emissive={C.accentOrange}
+          emissiveIntensity={0.14}
+          clearcoat={0.5}
+          clearcoatRoughness={0.3}
+        />
+      </mesh>
+      <mesh position={[0, 0.68, 0]} castShadow>
+        <cylinderGeometry args={[0.42, 0.48, 0.03, 12]} />
+        <meshPhysicalMaterial
+          color={C.bodyLight}
+          roughness={0.18}
+          metalness={0.9}
+          clearcoat={0.5}
+          clearcoatRoughness={0.25}
         />
       </mesh>
     </group>
@@ -126,29 +171,45 @@ function RoverBody() {
 function FrontCamera() {
   return (
     <group>
-      <mesh position={[0, 0.46, 0.48]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.1, 0.1, 0.06, 24]} />
-        <meshStandardMaterial color={C.dark} roughness={0.2} metalness={0.7} />
+      <mesh position={[0, 0.46, 0.48]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <cylinderGeometry args={[0.1, 0.1, 0.06, 32]} />
+        <meshPhysicalMaterial
+          color={C.dark}
+          roughness={0.2}
+          metalness={0.72}
+          clearcoat={0.35}
+          clearcoatRoughness={0.4}
+        />
       </mesh>
-      <mesh position={[0, 0.46, 0.515]} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[0.08, 0.007, 8, 24]} />
-        <meshStandardMaterial
+      <mesh position={[0, 0.46, 0.515]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <torusGeometry args={[0.08, 0.007, 8, 32]} />
+        <meshPhysicalMaterial
           color={C.trim}
-          roughness={0.22}
-          metalness={0.7}
+          roughness={0.2}
+          metalness={0.75}
+          clearcoat={0.4}
+          clearcoatRoughness={0.35}
         />
       </mesh>
-      <mesh position={[0, 0.46, 0.515]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.06, 0.06, 0.014, 24]} />
-        <meshStandardMaterial
+      <mesh position={[0, 0.46, 0.515]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <cylinderGeometry args={[0.06, 0.06, 0.014, 32]} />
+        <meshPhysicalMaterial
           color={C.lens}
-          roughness={0.03}
-          metalness={0.98}
+          roughness={0.04}
+          metalness={0.96}
+          clearcoat={1}
+          clearcoatRoughness={0.06}
         />
       </mesh>
-      <mesh position={[0, 0.46, 0.524]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.032, 0.032, 0.004, 20]} />
-        <meshStandardMaterial color="#040408" roughness={0.01} metalness={1} />
+      <mesh position={[0, 0.46, 0.524]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <cylinderGeometry args={[0.032, 0.032, 0.004, 24]} />
+        <meshPhysicalMaterial
+          color="#040408"
+          roughness={0.02}
+          metalness={1}
+          clearcoat={1}
+          clearcoatRoughness={0.1}
+        />
       </mesh>
     </group>
   );
@@ -164,34 +225,48 @@ function RoverModel() {
   });
 
   return (
-    <group rotation={[0, -Math.PI / 6, 0]} scale={[1.25, 1.15, 1.2]}>
+    <group
+      rotation={[0, -Math.PI / 6, 0]}
+      scale={[1.25, 1.15, 1.2]}
+      position={[0, -0.02, 0]}
+    >
       <RoverBody />
       <FrontCamera />
 
-      <mesh position={[0, 0.73, -0.04]}>
+      <mesh position={[0, 0.73, -0.04]} castShadow>
         <boxGeometry args={[0.22, 0.06, 0.17]} />
-        <meshStandardMaterial color={C.dark} roughness={0.25} metalness={0.7} />
+        <meshPhysicalMaterial
+          color={C.dark}
+          roughness={0.24}
+          metalness={0.72}
+          clearcoat={0.3}
+          clearcoatRoughness={0.45}
+        />
       </mesh>
-      <mesh position={[0, 0.79, -0.04]}>
+      <mesh position={[0, 0.79, -0.04]} castShadow>
         <boxGeometry args={[0.06, 0.06, 0.06]} />
-        <meshStandardMaterial
+        <meshPhysicalMaterial
           color={C.darkMid}
-          roughness={0.22}
-          metalness={0.65}
+          roughness={0.2}
+          metalness={0.68}
+          clearcoat={0.28}
+          clearcoatRoughness={0.48}
         />
       </mesh>
 
       {[-0.12, -0.06, 0, 0.06, 0.12].map((x) => (
         <group key={`sp-${x}`}>
-          <mesh position={[x, 0.30, 0.52]}>
+          <mesh position={[x, 0.3, 0.52]} castShadow>
             <boxGeometry args={[0.04, 0.028, 0.012]} />
-            <meshStandardMaterial
+            <meshPhysicalMaterial
               color={C.dark}
               roughness={0.25}
-              metalness={0.5}
+              metalness={0.52}
+              clearcoat={0.2}
+              clearcoatRoughness={0.55}
             />
           </mesh>
-          <mesh position={[x, 0.30, 0.527]}>
+          <mesh position={[x, 0.3, 0.527]}>
             <boxGeometry args={[0.028, 0.018, 0.004]} />
             <meshStandardMaterial
               color={C.sensorPane}
@@ -205,79 +280,91 @@ function RoverModel() {
       ))}
 
       <mesh
-        position={[0.50, 0.46, 0]}
+        position={[0.5, 0.46, 0]}
         rotation={[0, Math.PI / 2, Math.PI / 4]}
+        castShadow
       >
         <planeGeometry args={[0.13, 0.13]} />
-        <meshStandardMaterial
+        <meshPhysicalMaterial
           color={C.dark}
-          roughness={0.25}
-          metalness={0.5}
+          roughness={0.24}
+          metalness={0.55}
           side={THREE.DoubleSide}
+          clearcoat={0.25}
+          clearcoatRoughness={0.5}
         />
       </mesh>
       <mesh
-        position={[-0.50, 0.46, 0]}
+        position={[-0.5, 0.46, 0]}
         rotation={[0, -Math.PI / 2, Math.PI / 4]}
+        castShadow
       >
         <planeGeometry args={[0.13, 0.13]} />
-        <meshStandardMaterial
+        <meshPhysicalMaterial
           color={C.dark}
-          roughness={0.25}
-          metalness={0.5}
+          roughness={0.24}
+          metalness={0.55}
           side={THREE.DoubleSide}
+          clearcoat={0.25}
+          clearcoatRoughness={0.5}
         />
       </mesh>
 
-      <Wheel position={[0.62, 0.15, 0.34]} />
-      <Wheel position={[-0.62, 0.15, 0.34]} mirror />
-      <Wheel position={[0.62, 0.15, -0.34]} />
-      <Wheel position={[-0.62, 0.15, -0.34]} mirror />
+      <Wheel position={[0.62, 0.2, 0.34]} />
+      <Wheel position={[-0.62, 0.2, 0.34]} mirror />
+      <Wheel position={[0.62, 0.2, -0.34]} />
+      <Wheel position={[-0.62, 0.2, -0.34]} mirror />
 
       {(
         [
-          [0.54, 0.22, 0.34],
-          [-0.54, 0.22, 0.34],
-          [0.54, 0.22, -0.34],
-          [-0.54, 0.22, -0.34],
+          [0.54, 0.27, 0.34],
+          [-0.54, 0.27, 0.34],
+          [0.54, 0.27, -0.34],
+          [-0.54, 0.27, -0.34],
         ] as [number, number, number][]
       ).map((pos, i) => (
-        <mesh key={`brk-${i}`} position={pos}>
+        <mesh key={`brk-${i}`} position={pos} castShadow>
           <boxGeometry args={[0.04, 0.14, 0.055]} />
-          <meshStandardMaterial
+          <meshPhysicalMaterial
             color={C.dark}
-            roughness={0.28}
-            metalness={0.6}
+            roughness={0.26}
+            metalness={0.62}
+            clearcoat={0.22}
+            clearcoatRoughness={0.52}
           />
         </mesh>
       ))}
 
       {(
         [
-          [0.58, 0.15, 0.34],
-          [-0.58, 0.15, 0.34],
-          [0.58, 0.15, -0.34],
-          [-0.58, 0.15, -0.34],
+          [0.58, 0.2, 0.34],
+          [-0.58, 0.2, 0.34],
+          [0.58, 0.2, -0.34],
+          [-0.58, 0.2, -0.34],
         ] as [number, number, number][]
       ).map((pos, i) => (
-        <mesh key={`axl-${i}`} position={pos} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.02, 0.02, 0.07, 8]} />
-          <meshStandardMaterial
+        <mesh key={`axl-${i}`} position={pos} rotation={[0, 0, Math.PI / 2]} castShadow>
+          <cylinderGeometry args={[0.02, 0.02, 0.07, 16]} />
+          <meshPhysicalMaterial
             color={C.darkMid}
-            roughness={0.28}
-            metalness={0.55}
+            roughness={0.26}
+            metalness={0.58}
+            clearcoat={0.25}
+            clearcoatRoughness={0.5}
           />
         </mesh>
       ))}
 
-      <mesh position={[0, 0.24, 0.04]}>
+      <mesh position={[0, 0.24, 0.04]} castShadow>
         <boxGeometry args={[0.56, 0.015, 0.36]} />
-        <meshStandardMaterial
+        <meshPhysicalMaterial
           color="#15151a"
-          metalness={0.5}
-          roughness={0.4}
+          metalness={0.52}
+          roughness={0.38}
           emissive={C.accentOrange}
-          emissiveIntensity={0.25}
+          emissiveIntensity={0.22}
+          clearcoat={0.4}
+          clearcoatRoughness={0.35}
         />
       </mesh>
 
@@ -333,7 +420,7 @@ function Moon() {
         <meshStandardMaterial
           color="#e8e0d0"
           emissive="#e8dcc8"
-          emissiveIntensity={0.4}
+          emissiveIntensity={0.32}
           roughness={0.85}
           metalness={0}
         />
@@ -348,7 +435,7 @@ function Moon() {
 
 function Starfield() {
   const points = useMemo(() => {
-    const count = 550;
+    const count = 720;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       const theta = Math.random() * Math.PI * 2;
@@ -366,11 +453,11 @@ function Starfield() {
   return (
     <points geometry={points} renderOrder={999}>
       <pointsMaterial
-        color="#d0d0d8"
-        size={1.0}
+        color="#e2e4ee"
+        size={1.15}
         sizeAttenuation={false}
         transparent
-        opacity={0.45}
+        opacity={0.99}
         fog={false}
         depthWrite={false}
         depthTest={false}
@@ -442,16 +529,16 @@ function MiniRover({
   });
 
   const wheelPositions: [number, number, number][] = [
-    [0.16, 0.05, 0.09],
-    [-0.16, 0.05, 0.09],
-    [0.16, 0.05, -0.09],
-    [-0.16, 0.05, -0.09],
+    [0.16, 0.078, 0.09],
+    [-0.16, 0.078, 0.09],
+    [0.16, 0.078, -0.09],
+    [-0.16, 0.078, -0.09],
   ];
 
   return (
     <group ref={ref}>
       <group rotation={[0, Math.PI / 8, 0]}>
-        <mesh position={[0, 0.16, 0]}>
+        <mesh position={[0, 0.188, 0]}>
           <cylinderGeometry args={[0.1, 0.12, 0.1, 8]} />
           <meshStandardMaterial
             color={C.body}
@@ -459,7 +546,7 @@ function MiniRover({
             metalness={0.8}
           />
         </mesh>
-        <mesh position={[0, 0.22, 0]}>
+        <mesh position={[0, 0.248, 0]}>
           <cylinderGeometry args={[0.09, 0.1, 0.02, 8]} />
           <meshStandardMaterial
             color="#2a2018"
@@ -526,7 +613,7 @@ const XRAY_FRAGMENT = `
     float trail = smoothstep(3.8, 0.0, diff);
     float dist = length(vWorldPos.xz);
     float dFade = smoothstep(0.4, 2.0, dist);
-    float alpha = 0.18 * trail * dFade * uFade;
+    float alpha = 0.14 * trail * dFade * uFade;
     if (alpha < 0.003) discard;
     gl_FragColor = vec4(uColor, alpha);
   }
@@ -544,7 +631,7 @@ const PAINT_FRAGMENT = `
     float dist = length(vWorldPos.xz);
     float dFade = smoothstep(0.3, 1.5, dist);
     float edge = 1.0 - smoothstep(0.0, 0.15, abs(sin(a * 12.0 + dist * 3.0)) * 0.3);
-    float alpha = 0.32 * trail * dFade * (0.7 + edge * 0.3);
+    float alpha = 0.26 * trail * dFade * (0.7 + edge * 0.3);
     if (alpha < 0.003) discard;
     gl_FragColor = vec4(uColor, alpha);
   }
@@ -603,7 +690,7 @@ const SWEEP_FRAGMENT = `
     float a = atan(vWorldPos.z, vWorldPos.x);
     float diff = mod(uSweep - a + TAU, TAU);
     float trail = pow(max(0.0, 1.0 - diff / 1.5), 2.5);
-    float alpha = 0.28 * ring * trail;
+    float alpha = 0.22 * ring * trail;
     if (alpha < 0.003) discard;
     gl_FragColor = vec4(0.91, 0.58, 0.24, alpha);
   }
@@ -848,25 +935,20 @@ function PaintSpray() {
   );
 }
 
-function OverlayGrid() {
-  const ref = useRef<THREE.GridHelper>(null);
-  useEffect(() => {
-    if (!ref.current) return;
-    const mats = Array.isArray(ref.current.material)
-      ? ref.current.material
-      : [ref.current.material];
-    mats.forEach((m) => {
-      m.depthTest = false;
-      m.transparent = true;
-      m.opacity = 0.6;
-    });
-    ref.current.renderOrder = 10;
-  }, []);
+function FloorGrid() {
   return (
-    <gridHelper
-      ref={ref}
-      args={[40, 60, "#5a3010", "#3a2008"]}
-      position={[0, 0.02, 0]}
+    <Grid
+      position={[0, 0.018, 0]}
+      infiniteGrid
+      fadeDistance={28}
+      fadeStrength={1.25}
+      fadeFrom={0.82}
+      cellSize={0.62}
+      sectionSize={3.2}
+      cellThickness={0.55}
+      sectionThickness={0.95}
+      cellColor="#252028"
+      sectionColor="#3d3028"
     />
   );
 }
@@ -875,11 +957,29 @@ function OverlayGrid() {
 
 function InteractiveScene() {
   const groupRef = useRef<THREE.Group>(null);
+  const keyLightRef = useRef<THREE.DirectionalLight>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const scroll = useRef(0);
   const entrance = useRef({ progress: 0, done: false });
 
+  useLayoutEffect(() => {
+    const light = keyLightRef.current;
+    if (!light) return;
+    light.shadow.mapSize.set(2048, 2048);
+    light.shadow.camera.near = 2.5;
+    light.shadow.camera.far = 26;
+    light.shadow.bias = -0.00022;
+    light.shadow.normalBias = 0.028;
+    const cam = light.shadow.camera as THREE.OrthographicCamera;
+    cam.left = -6.5;
+    cam.right = 6.5;
+    cam.top = 6.5;
+    cam.bottom = -6.5;
+    cam.updateProjectionMatrix();
+  }, []);
+
   useEffect(() => {
+    scroll.current = window.scrollY;
     const handleMouseMove = (e: MouseEvent) => {
       mouse.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
       mouse.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
@@ -905,12 +1005,12 @@ function InteractiveScene() {
       );
       const t = 1 - Math.pow(1 - entrance.current.progress, 3);
       groupRef.current.rotation.y = THREE.MathUtils.lerp(-0.25, 0, t);
-      groupRef.current.position.y = THREE.MathUtils.lerp(-0.15, 0, t);
+      groupRef.current.position.y = THREE.MathUtils.lerp(-0.15, -0.02, t);
       if (entrance.current.progress >= 1) entrance.current.done = true;
       return;
     }
 
-    const scrollRotation = scroll.current * 0.003;
+    const scrollRotation = scroll.current * 0.003 * 2.35;
     const targetY = mouse.current.x * 0.08 + scrollRotation;
 
     groupRef.current.rotation.y = THREE.MathUtils.lerp(
@@ -928,81 +1028,79 @@ function InteractiveScene() {
   return (
     <>
       <color attach="background" args={["#020204"]} />
-      <fog attach="fog" args={["#020204", 12, 40]} />
+      <fog attach="fog" args={["#020204", 14, 48]} />
 
-      <ambientLight intensity={0.3} color="#c0c8d8" />
-      <directionalLight position={[5, 8, 3]} intensity={1.8} color="#f0f4ff" />
+      <ambientLight intensity={0.28} color="#c4cad8" />
+      <directionalLight
+        ref={keyLightRef}
+        castShadow
+        position={[5, 8, 3]}
+        intensity={1.52}
+        color="#f2f5fc"
+      />
       <directionalLight
         position={[-3, 4, -2]}
-        intensity={0.5}
-        color="#8090a8"
+        intensity={0.32}
+        color="#8898ac"
       />
       <pointLight
         position={[0, 0.5, 0]}
-        intensity={0.7}
+        intensity={0.52}
         color={C.glowOrange}
         distance={4}
       />
-      {/* Key spot on the rover */}
       <spotLight
         position={[2, 4, 3]}
-        intensity={1.2}
+        intensity={1.02}
         angle={0.5}
-        penumbra={0.6}
-        color="#f0eee8"
-        target-position={[0, 0.4, 0]}
+        penumbra={0.62}
+        color="#f4f0ea"
+        target-position={[0, 0.35, 0]}
       />
       <spotLight
         position={[-2, 6, -5]}
-        intensity={0.3}
+        intensity={0.22}
         angle={0.4}
-        penumbra={0.8}
+        penumbra={0.82}
         color="#e8eeff"
       />
-      {/* Rim light from behind */}
       <directionalLight
         position={[-3, 3, -4]}
-        intensity={0.6}
-        color="#d0c8c0"
+        intensity={0.42}
+        color="#cec6be"
       />
-      {/* Moonlight */}
       <directionalLight
         position={[12, 10, -18]}
-        intensity={0.2}
+        intensity={0.12}
         color="#e8dcc8"
       />
 
-      {/* Sky */}
       <Starfield />
       <Moon />
 
-      {/* Main rover */}
       <group ref={groupRef}>
         <RoverModel />
       </group>
 
-      {/* Background rovers */}
       <MiniRover radius={6} speed={0.06} startAngle={0} />
       <MiniRover radius={9} speed={-0.04} startAngle={2.1} />
       <MiniRover radius={12} speed={0.03} startAngle={4.2} />
 
-      {/* Underground mapping visualization */}
       <RadarSweep />
       <PaintedUtilities />
 
-      {/* Terrain + grid */}
       <Terrain />
-      <OverlayGrid />
+      <FloorGrid />
 
       <ContactShadows
         position={[0, -0.01, 0]}
-        opacity={0.35}
-        blur={2.5}
+        opacity={0.22}
+        blur={2}
         far={3}
         color="#020204"
       />
 
-      <Environment preset="night" environmentIntensity={0.25} />
+      <Environment preset="warehouse" environmentIntensity={0.3} />
     </>
   );
 }
@@ -1010,11 +1108,19 @@ function InteractiveScene() {
 export function RoverScene() {
   return (
     <Canvas
-      camera={{ position: [2, 1.2, 4.5], fov: 30, near: 0.1, far: 100 }}
-      dpr={[1, 2]}
+      shadows
+      camera={{ position: [2, 1.05, 4.65], fov: 30, near: 0.1, far: 100 }}
+      dpr={[1, 1.75]}
       gl={{
         antialias: true,
         powerPreference: "high-performance",
+        toneMapping: THREE.ACESFilmicToneMapping,
+        toneMappingExposure: 1.05,
+        outputColorSpace: THREE.SRGBColorSpace,
+      }}
+      onCreated={({ gl }) => {
+        gl.shadowMap.enabled = true;
+        gl.shadowMap.type = THREE.PCFSoftShadowMap;
       }}
     >
       <Suspense fallback={null}>
