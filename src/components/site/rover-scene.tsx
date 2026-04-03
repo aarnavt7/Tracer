@@ -32,6 +32,19 @@ function Wheel({
   mirror?: boolean;
 }) {
   const capX = mirror ? -0.054 : 0.054;
+  const grousers = useMemo(() => {
+    const xs = [-0.032, 0, 0.032] as const;
+    const n = 12;
+    const out: { x: number; v: number; flip: number }[] = [];
+    for (const x of xs) {
+      for (let i = 0; i < n; i++) {
+        const v = (i / n) * Math.PI * 2;
+        out.push({ x, v, flip: i % 2 === 0 ? 1 : -1 });
+      }
+    }
+    return out;
+  }, []);
+
   return (
     <group position={position}>
       <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
@@ -47,6 +60,28 @@ function Wheel({
           sheenColor="#7a3d22"
         />
       </mesh>
+      {grousers.map(({ x, v, flip }, i) => (
+        <mesh
+          key={`gr-${i}`}
+          position={[
+            x,
+            Math.cos(v) * TIRE_R * 1.01,
+            Math.sin(v) * TIRE_R * 1.01,
+          ]}
+          rotation={[flip * 0.42, v, 0]}
+          castShadow
+        >
+          <boxGeometry args={[0.052, 0.015, 0.024]} />
+          <meshPhysicalMaterial
+            color={C.tireDeep}
+            roughness={0.96}
+            metalness={0}
+            sheen={0.22}
+            sheenRoughness={0.9}
+            sheenColor="#4a2814"
+          />
+        </mesh>
+      ))}
       <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
         <cylinderGeometry args={[RIM_WELL_R, RIM_WELL_R, 0.038, 32]} />
         <meshPhysicalMaterial
