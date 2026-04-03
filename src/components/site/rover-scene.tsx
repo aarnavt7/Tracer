@@ -496,6 +496,358 @@ function MiniRover({
   );
 }
 
+/* ═══ UNDERGROUND MAPPING VISUALIZATION ═══ */
+
+const SWEEP_SPEED = 0.45;
+const T_RADAR_START = 0.9;
+const T_RADAR_DUR = 0.8;
+const T_UTIL_START = 1.5;
+const T_UTIL_DUR = 0.6;
+const T_SWEEP_START = 2.0;
+
+const SCAN_VERTEX = `
+  varying vec3 vWorldPos;
+  void main() {
+    vec4 wp = modelMatrix * vec4(position, 1.0);
+    vWorldPos = wp.xyz;
+    gl_Position = projectionMatrix * viewMatrix * wp;
+  }
+`;
+
+const XRAY_FRAGMENT = `
+  uniform float uSweep;
+  uniform vec3 uColor;
+  uniform float uFade;
+  varying vec3 vWorldPos;
+  #define TAU 6.28318530718
+  void main() {
+    float a = atan(vWorldPos.z, vWorldPos.x);
+    float diff = mod(uSweep - a + TAU, TAU);
+    float trail = smoothstep(3.8, 0.0, diff);
+    float dist = length(vWorldPos.xz);
+    float dFade = smoothstep(0.4, 2.0, dist);
+    float alpha = 0.18 * trail * dFade * uFade;
+    if (alpha < 0.003) discard;
+    gl_FragColor = vec4(uColor, alpha);
+  }
+`;
+
+const PAINT_FRAGMENT = `
+  uniform float uSweep;
+  uniform vec3 uColor;
+  varying vec3 vWorldPos;
+  #define TAU 6.28318530718
+  void main() {
+    float a = atan(vWorldPos.z, vWorldPos.x);
+    float diff = mod(uSweep - a + TAU, TAU);
+    float trail = smoothstep(5.2, 0.0, diff);
+    float dist = length(vWorldPos.xz);
+    float dFade = smoothstep(0.3, 1.5, dist);
+    float edge = 1.0 - smoothstep(0.0, 0.15, abs(sin(a * 12.0 + dist * 3.0)) * 0.3);
+    float alpha = 0.32 * trail * dFade * (0.7 + edge * 0.3);
+    if (alpha < 0.003) discard;
+    gl_FragColor = vec4(uColor, alpha);
+  }
+`;
+
+const UTILITY_PATHS = [
+  {
+    pts: [
+      [-6, -0.25, -1.2],
+      [-2, -0.25, 0.4],
+      [2, -0.28, -0.2],
+      [6, -0.22, 0.6],
+    ],
+    color: "#e03030",
+    w: 0.035,
+  },
+  {
+    pts: [
+      [-5, -0.45, 1.0],
+      [-1, -0.42, 0.2],
+      [3, -0.48, 0.8],
+      [7, -0.44, 1.4],
+    ],
+    color: "#3088ee",
+    w: 0.04,
+  },
+  {
+    pts: [
+      [-7, -0.35, -0.3],
+      [-3, -0.38, 0.6],
+      [1, -0.33, -0.5],
+      [5, -0.36, 0.3],
+    ],
+    color: "#e8c020",
+    w: 0.032,
+  },
+  {
+    pts: [
+      [-4, -0.55, 0.3],
+      [0, -0.52, -0.6],
+      [4, -0.58, 0.1],
+      [8, -0.54, -0.4],
+    ],
+    color: "#30b860",
+    w: 0.028,
+  },
+];
+
+const SWEEP_FRAGMENT = `
+  uniform float uSweep;
+  varying vec3 vWorldPos;
+  #define TAU 6.28318530718
+  void main() {
+    float dist = length(vWorldPos.xz);
+    float ring = smoothstep(0.8, 1.3, dist) * (1.0 - smoothstep(2.4, 3.0, dist));
+    float a = atan(vWorldPos.z, vWorldPos.x);
+    float diff = mod(uSweep - a + TAU, TAU);
+    float trail = pow(max(0.0, 1.0 - diff / 1.5), 2.5);
+    float alpha = 0.28 * ring * trail;
+    if (alpha < 0.003) discard;
+    gl_FragColor = vec4(0.91, 0.58, 0.24, alpha);
+  }
+`;
+
+function RadarSweep() {
+  const groupRef = useRef<THREE.Group>(null);
+
+  const mat = useMemo(
+    () =>
+      new THREE.ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        depthTest: false,
+        side: THREE.DoubleSide,
+        uniforms: { uSweep: { value: 0 } },
+        vertexShader: SCAN_VERTEX,
+        fragmentShader: SWEEP_FRAGMENT,
+      }),
+    [],
+  );
+
+  const discGeo = useMemo(() => new THREE.CircleGeometry(3.2, 64), []);
+
+  useFrame(({ clock }) => {
+    if (!groupRef.current) return;
+    const t = clock.getElapsedTime();
+    const expandT = Math.min(
+      Math.max((t - T_RADAR_START) / T_RADAR_DUR, 0),
+      1,
+    );
+    const ease = 1 - Math.pow(1 - expandT, 3);
+    groupRef.current.scale.set(ease, ease, 1);
+
+    if (t > T_SWEEP_START) {
+      mat.uniforms.uSweep.value = (t - T_SWEEP_START) * SWEEP_SPEED;
+    }
+  });
+
+  return (
+    <group
+      ref={groupRef}
+      position={[0, 0.016, 0]}
+      rotation={[-Math.PI / 2, 0, 0]}
+    >
+      {/* Scan boundary ring */}
+      <mesh renderOrder={7}>
+        <ringGeometry args={[1.98, 2.06, 80]} />
+        <meshBasicMaterial
+          color={C.accentOrange}
+          transparent
+          opacity={0.04}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+          depthTest={false}
+        />
+      </mesh>
+      {/* Inner reference ring */}
+      <mesh renderOrder={7}>
+        <ringGeometry args={[1.18, 1.24, 64]} />
+        <meshBasicMaterial
+          color={C.accentOrange}
+          transparent
+          opacity={0.025}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+          depthTest={false}
+        />
+      </mesh>
+      {/* Animated sweep arc */}
+      <mesh geometry={discGeo} material={mat} renderOrder={9} />
+    </group>
+  );
+}
+
+function PaintedUtilities() {
+  const groupRef = useRef<THREE.Group>(null);
+
+  const { geos, mats } = useMemo(() => {
+    const geos: THREE.TubeGeometry[] = [];
+    const mats: THREE.ShaderMaterial[] = [];
+    UTILITY_PATHS.forEach((d) => {
+      const curve = new THREE.CatmullRomCurve3(
+        d.pts.map((p) => new THREE.Vector3(p[0], p[1], p[2])),
+      );
+      geos.push(new THREE.TubeGeometry(curve, 48, d.w, 8, false));
+      mats.push(
+        new THREE.ShaderMaterial({
+          transparent: true,
+          depthTest: false,
+          depthWrite: false,
+          side: THREE.DoubleSide,
+          uniforms: {
+            uSweep: { value: 0 },
+            uColor: { value: new THREE.Color(d.color) },
+            uFade: { value: 0 },
+          },
+          vertexShader: SCAN_VERTEX,
+          fragmentShader: XRAY_FRAGMENT,
+        }),
+      );
+    });
+    return { geos, mats };
+  }, []);
+
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    const fade = Math.min(Math.max((t - T_UTIL_START) / T_UTIL_DUR, 0), 1);
+    const sweepAngle =
+      t > T_SWEEP_START ? (t - T_SWEEP_START) * SWEEP_SPEED : 0;
+    mats.forEach((m) => {
+      m.uniforms.uSweep.value = sweepAngle;
+      m.uniforms.uFade.value = fade;
+    });
+  });
+
+  return (
+    <group ref={groupRef}>
+      {geos.map((geo, i) => (
+        <mesh key={i} geometry={geo} material={mats[i]} renderOrder={15} />
+      ))}
+    </group>
+  );
+}
+
+function SurfacePaintMarks() {
+  const { geos, mats } = useMemo(() => {
+    const geos: THREE.TubeGeometry[] = [];
+    const mats: THREE.ShaderMaterial[] = [];
+    UTILITY_PATHS.forEach((d) => {
+      const surfacePts = d.pts.map(
+        (p) => new THREE.Vector3(p[0], 0.014, p[2]),
+      );
+      const curve = new THREE.CatmullRomCurve3(surfacePts);
+      geos.push(new THREE.TubeGeometry(curve, 48, d.w * 1.6, 8, false));
+      mats.push(
+        new THREE.ShaderMaterial({
+          transparent: true,
+          depthTest: false,
+          depthWrite: false,
+          side: THREE.DoubleSide,
+          uniforms: {
+            uSweep: { value: 0 },
+            uColor: { value: new THREE.Color(d.color) },
+          },
+          vertexShader: SCAN_VERTEX,
+          fragmentShader: PAINT_FRAGMENT,
+        }),
+      );
+    });
+    return { geos, mats };
+  }, []);
+
+  useFrame(({ clock }) => {
+    const angle = clock.getElapsedTime() * SWEEP_SPEED;
+    mats.forEach((m) => {
+      m.uniforms.uSweep.value = angle;
+    });
+  });
+
+  return (
+    <group>
+      {geos.map((geo, i) => (
+        <mesh key={i} geometry={geo} material={mats[i]} renderOrder={6} />
+      ))}
+    </group>
+  );
+}
+
+function PaintSpray() {
+  const N = 50;
+
+  const { geo, data } = useMemo(() => {
+    const positions = new Float32Array(N * 3);
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    const data = Array.from({ length: N }, () => ({
+      life: 1,
+      maxLife: 0.2,
+      x: 0,
+      y: -10,
+      z: 0,
+      vx: 0,
+      vy: 0,
+      vz: 0,
+    }));
+    return { geo, data };
+  }, []);
+
+  useFrame(({ clock }, delta) => {
+    const t = clock.getElapsedTime();
+    const angle = t * SWEEP_SPEED;
+    const sx = Math.cos(angle) * 0.55;
+    const sz = Math.sin(angle) * 0.55;
+    const positions = geo.attributes.position.array as Float32Array;
+
+    data.forEach((p, i) => {
+      p.life += delta;
+      if (p.life < p.maxLife) {
+        p.x += p.vx * delta;
+        p.y += p.vy * delta;
+        p.z += p.vz * delta;
+        p.y = Math.max(p.y, 0.016);
+      }
+      positions[i * 3] = p.life < p.maxLife ? p.x : 0;
+      positions[i * 3 + 1] = p.life < p.maxLife ? p.y : -10;
+      positions[i * 3 + 2] = p.life < p.maxLife ? p.z : 0;
+    });
+
+    const toSpawn = Math.min(3, data.filter((p) => p.life >= p.maxLife).length);
+    let spawned = 0;
+    for (let i = 0; i < data.length && spawned < toSpawn; i++) {
+      if (data[i].life >= data[i].maxLife) {
+        const spread = 0.06;
+        data[i].x = sx + (Math.random() - 0.5) * spread;
+        data[i].y = 0.1 + Math.random() * 0.04;
+        data[i].z = sz + (Math.random() - 0.5) * spread;
+        data[i].vx = (Math.random() - 0.5) * 0.25;
+        data[i].vy = -0.7 - Math.random() * 0.5;
+        data[i].vz = (Math.random() - 0.5) * 0.25;
+        data[i].life = 0;
+        data[i].maxLife = 0.1 + Math.random() * 0.12;
+        spawned++;
+      }
+    }
+
+    geo.attributes.position.needsUpdate = true;
+  });
+
+  return (
+    <points geometry={geo} renderOrder={12}>
+      <pointsMaterial
+        color={C.glowOrange}
+        size={1.4}
+        sizeAttenuation={false}
+        transparent
+        opacity={0.5}
+        depthWrite={false}
+        fog={false}
+      />
+    </points>
+  );
+}
+
 function OverlayGrid() {
   const ref = useRef<THREE.GridHelper>(null);
   useEffect(() => {
@@ -558,7 +910,7 @@ function InteractiveScene() {
       return;
     }
 
-    const scrollRotation = scroll.current * 0.006;
+    const scrollRotation = scroll.current * 0.004;
     const targetY = mouse.current.x * 0.08 + scrollRotation;
 
     groupRef.current.rotation.y = THREE.MathUtils.lerp(
@@ -634,7 +986,11 @@ function InteractiveScene() {
       <MiniRover radius={9} speed={-0.04} startAngle={2.1} />
       <MiniRover radius={12} speed={0.03} startAngle={4.2} />
 
-      {/* Terrain first, then grid overlaid on top */}
+      {/* Underground mapping visualization */}
+      <RadarSweep />
+      <PaintedUtilities />
+
+      {/* Terrain + grid */}
       <Terrain />
       <OverlayGrid />
 
