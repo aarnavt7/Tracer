@@ -6,12 +6,12 @@ import { Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
 const C = {
-  body: "#1c1c22",
-  bodyLight: "#222228",
-  bodyEdge: "#25252b",
-  dark: "#0e0e12",
-  darkMid: "#2a2a30",
-  trim: "#3a3a40",
+  body: "#4a4a54",
+  bodyLight: "#585862",
+  bodyEdge: "#52525c",
+  dark: "#2a2a32",
+  darkMid: "#3e3e48",
+  trim: "#5a5a64",
   tire: "#c87840",
   tireDeep: "#a86030",
   lens: "#080810",
@@ -164,7 +164,7 @@ function RoverModel() {
   });
 
   return (
-    <group rotation={[0, -Math.PI / 6, 0]}>
+    <group rotation={[0, -Math.PI / 6, 0]} scale={[1.25, 1.15, 1.2]}>
       <RoverBody />
       <FrontCamera />
 
@@ -910,7 +910,7 @@ function InteractiveScene() {
       return;
     }
 
-    const scrollRotation = scroll.current * 0.004;
+    const scrollRotation = scroll.current * 0.003;
     const targetY = mouse.current.x * 0.08 + scrollRotation;
 
     groupRef.current.rotation.y = THREE.MathUtils.lerp(
@@ -930,11 +930,11 @@ function InteractiveScene() {
       <color attach="background" args={["#020204"]} />
       <fog attach="fog" args={["#020204", 12, 40]} />
 
-      <ambientLight intensity={0.18} color="#b0c0d8" />
-      <directionalLight position={[5, 8, 3]} intensity={1.3} color="#f0f4ff" />
+      <ambientLight intensity={0.3} color="#c0c8d8" />
+      <directionalLight position={[5, 8, 3]} intensity={1.8} color="#f0f4ff" />
       <directionalLight
         position={[-3, 4, -2]}
-        intensity={0.3}
+        intensity={0.5}
         color="#8090a8"
       />
       <pointLight
@@ -946,7 +946,7 @@ function InteractiveScene() {
       {/* Key spot on the rover */}
       <spotLight
         position={[2, 4, 3]}
-        intensity={0.8}
+        intensity={1.2}
         angle={0.5}
         penumbra={0.6}
         color="#f0eee8"
@@ -962,7 +962,7 @@ function InteractiveScene() {
       {/* Rim light from behind */}
       <directionalLight
         position={[-3, 3, -4]}
-        intensity={0.4}
+        intensity={0.6}
         color="#d0c8c0"
       />
       {/* Moonlight */}
@@ -1002,7 +1002,7 @@ function InteractiveScene() {
         color="#020204"
       />
 
-      <Environment preset="night" environmentIntensity={0.15} />
+      <Environment preset="night" environmentIntensity={0.25} />
     </>
   );
 }
