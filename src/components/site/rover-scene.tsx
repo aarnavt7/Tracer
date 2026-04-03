@@ -6,15 +6,16 @@ import { Suspense, useEffect, useRef } from "react";
 import * as THREE from "three";
 
 const C = {
-  body: "#cac4bc",
-  bodyLight: "#d4cec6",
-  bodyDark: "#b8b2aa",
-  dark: "#1a1a1e",
-  darkMid: "#2a2a2e",
+  body: "#1c1c22",
+  bodyLight: "#222228",
+  bodyEdge: "#25252b",
+  dark: "#0e0e12",
+  darkMid: "#2a2a30",
+  trim: "#3a3a40",
   tire: "#c87840",
   tireDeep: "#a86030",
   lens: "#080810",
-  sensorPane: "#e8e4de",
+  sensorPane: "#c8d0dc",
   scanBlue: "#3b82f6",
 };
 
@@ -25,25 +26,24 @@ function Wheel({
   position: [number, number, number];
   mirror?: boolean;
 }) {
-  const capX = mirror ? -0.042 : 0.042;
+  const capX = mirror ? -0.048 : 0.048;
   return (
     <group position={position}>
       <mesh rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.14, 0.14, 0.072, 24]} />
+        <cylinderGeometry args={[0.15, 0.15, 0.08, 24]} />
         <meshStandardMaterial
           color={C.tire}
           roughness={0.88}
           metalness={0.04}
         />
       </mesh>
-      {/* Tread grooves */}
-      {[-0.028, 0, 0.028].map((off) => (
+      {[-0.03, 0, 0.03].map((off) => (
         <mesh
           key={off}
           position={[off, 0, 0]}
           rotation={[0, 0, Math.PI / 2]}
         >
-          <torusGeometry args={[0.14, 0.003, 4, 24]} />
+          <torusGeometry args={[0.15, 0.003, 4, 24]} />
           <meshStandardMaterial
             color={C.tireDeep}
             roughness={0.92}
@@ -52,7 +52,7 @@ function Wheel({
         </mesh>
       ))}
       <mesh rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.062, 0.062, 0.078, 16]} />
+        <cylinderGeometry args={[0.068, 0.068, 0.085, 16]} />
         <meshStandardMaterial
           color={C.darkMid}
           roughness={0.35}
@@ -60,7 +60,7 @@ function Wheel({
         />
       </mesh>
       <mesh position={[capX, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.032, 0.032, 0.006, 8]} />
+        <cylinderGeometry args={[0.035, 0.035, 0.006, 8]} />
         <meshStandardMaterial
           color={C.dark}
           roughness={0.25}
@@ -74,40 +74,49 @@ function Wheel({
 function RoverBody() {
   return (
     <group rotation={[0, Math.PI / 8, 0]}>
-      {/* Main octagonal body */}
+      {/* Main octagonal body — wider & longer */}
       <mesh position={[0, 0.46, 0]}>
-        <cylinderGeometry args={[0.36, 0.41, 0.36, 8]} />
+        <cylinderGeometry args={[0.48, 0.54, 0.42, 8]} />
         <meshStandardMaterial
           color={C.body}
-          roughness={0.52}
-          metalness={0.08}
+          roughness={0.25}
+          metalness={0.85}
         />
       </mesh>
       {/* Lower dark trim band */}
-      <mesh position={[0, 0.285, 0]}>
-        <cylinderGeometry args={[0.415, 0.425, 0.06, 8]} />
-        <meshStandardMaterial
-          color={C.dark}
-          roughness={0.35}
-          metalness={0.3}
-        />
-      </mesh>
-      {/* Mid dark accent ring */}
-      <mesh position={[0, 0.345, 0]}>
-        <cylinderGeometry args={[0.41, 0.415, 0.025, 8]} />
+      <mesh position={[0, 0.26, 0]}>
+        <cylinderGeometry args={[0.55, 0.56, 0.06, 8]} />
         <meshStandardMaterial
           color={C.dark}
           roughness={0.3}
-          metalness={0.35}
+          metalness={0.5}
+        />
+      </mesh>
+      {/* Mid accent ring */}
+      <mesh position={[0, 0.32, 0]}>
+        <cylinderGeometry args={[0.545, 0.55, 0.03, 8]} />
+        <meshStandardMaterial
+          color={C.darkMid}
+          roughness={0.28}
+          metalness={0.6}
+        />
+      </mesh>
+      {/* Upper accent ring */}
+      <mesh position={[0, 0.60, 0]}>
+        <cylinderGeometry args={[0.485, 0.49, 0.02, 8]} />
+        <meshStandardMaterial
+          color={C.darkMid}
+          roughness={0.28}
+          metalness={0.6}
         />
       </mesh>
       {/* Top plate */}
-      <mesh position={[0, 0.65, 0]}>
-        <cylinderGeometry args={[0.32, 0.36, 0.03, 8]} />
+      <mesh position={[0, 0.68, 0]}>
+        <cylinderGeometry args={[0.42, 0.48, 0.03, 8]} />
         <meshStandardMaterial
           color={C.bodyLight}
-          roughness={0.48}
-          metalness={0.1}
+          roughness={0.22}
+          metalness={0.88}
         />
       </mesh>
     </group>
@@ -118,35 +127,35 @@ function FrontCamera() {
   return (
     <group>
       {/* Camera housing */}
-      <mesh position={[0, 0.46, 0.365]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.09, 0.09, 0.055, 24]} />
+      <mesh position={[0, 0.46, 0.48]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.1, 0.1, 0.06, 24]} />
         <meshStandardMaterial
           color={C.dark}
-          roughness={0.22}
-          metalness={0.5}
+          roughness={0.2}
+          metalness={0.7}
         />
       </mesh>
       {/* Bezel ring */}
-      <mesh position={[0, 0.46, 0.395]} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[0.072, 0.006, 8, 24]} />
+      <mesh position={[0, 0.46, 0.515]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.08, 0.007, 8, 24]} />
         <meshStandardMaterial
-          color={C.darkMid}
-          roughness={0.25}
-          metalness={0.6}
+          color={C.trim}
+          roughness={0.22}
+          metalness={0.7}
         />
       </mesh>
       {/* Lens outer */}
-      <mesh position={[0, 0.46, 0.395]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.055, 0.055, 0.012, 24]} />
+      <mesh position={[0, 0.46, 0.515]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.06, 0.06, 0.014, 24]} />
         <meshStandardMaterial
           color={C.lens}
-          roughness={0.04}
-          metalness={0.97}
+          roughness={0.03}
+          metalness={0.98}
         />
       </mesh>
-      {/* Lens inner highlight */}
-      <mesh position={[0, 0.46, 0.402]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.03, 0.03, 0.004, 20]} />
+      {/* Lens inner */}
+      <mesh position={[0, 0.46, 0.524]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.032, 0.032, 0.004, 20]} />
         <meshStandardMaterial
           color="#040408"
           roughness={0.01}
@@ -172,43 +181,43 @@ function RoverModel() {
       <FrontCamera />
 
       {/* Top sensor module */}
-      <mesh position={[0, 0.70, -0.04]}>
-        <boxGeometry args={[0.18, 0.055, 0.14]} />
+      <mesh position={[0, 0.73, -0.04]}>
+        <boxGeometry args={[0.22, 0.06, 0.17]} />
         <meshStandardMaterial
           color={C.dark}
-          roughness={0.32}
-          metalness={0.4}
+          roughness={0.25}
+          metalness={0.7}
         />
       </mesh>
       {/* Antenna nub */}
-      <mesh position={[0, 0.755, -0.04]}>
-        <boxGeometry args={[0.05, 0.055, 0.05]} />
+      <mesh position={[0, 0.79, -0.04]}>
+        <boxGeometry args={[0.06, 0.06, 0.06]} />
         <meshStandardMaterial
           color={C.darkMid}
-          roughness={0.28}
-          metalness={0.45}
+          roughness={0.22}
+          metalness={0.65}
         />
       </mesh>
 
       {/* Front sensor pane row (5 windows) */}
-      {[-0.10, -0.05, 0, 0.05, 0.10].map((x) => (
+      {[-0.12, -0.06, 0, 0.06, 0.12].map((x) => (
         <group key={`sp-${x}`}>
-          <mesh position={[x, 0.31, 0.395]}>
-            <boxGeometry args={[0.036, 0.026, 0.012]} />
+          <mesh position={[x, 0.30, 0.52]}>
+            <boxGeometry args={[0.04, 0.028, 0.012]} />
             <meshStandardMaterial
               color={C.dark}
-              roughness={0.28}
-              metalness={0.4}
+              roughness={0.25}
+              metalness={0.5}
             />
           </mesh>
-          <mesh position={[x, 0.31, 0.402]}>
-            <boxGeometry args={[0.026, 0.016, 0.004]} />
+          <mesh position={[x, 0.30, 0.527]}>
+            <boxGeometry args={[0.028, 0.018, 0.004]} />
             <meshStandardMaterial
               color={C.sensorPane}
-              roughness={0.18}
-              metalness={0.15}
+              roughness={0.15}
+              metalness={0.2}
               emissive="#3b82f6"
-              emissiveIntensity={0.04}
+              emissiveIntensity={0.06}
             />
           </mesh>
         </group>
@@ -216,51 +225,51 @@ function RoverModel() {
 
       {/* Side diamond accents */}
       <mesh
-        position={[0.375, 0.46, 0]}
+        position={[0.50, 0.46, 0]}
         rotation={[0, Math.PI / 2, Math.PI / 4]}
       >
-        <planeGeometry args={[0.1, 0.1]} />
+        <planeGeometry args={[0.13, 0.13]} />
         <meshStandardMaterial
           color={C.dark}
-          roughness={0.32}
-          metalness={0.3}
+          roughness={0.25}
+          metalness={0.5}
           side={THREE.DoubleSide}
         />
       </mesh>
       <mesh
-        position={[-0.375, 0.46, 0]}
+        position={[-0.50, 0.46, 0]}
         rotation={[0, -Math.PI / 2, Math.PI / 4]}
       >
-        <planeGeometry args={[0.1, 0.1]} />
+        <planeGeometry args={[0.13, 0.13]} />
         <meshStandardMaterial
           color={C.dark}
-          roughness={0.32}
-          metalness={0.3}
+          roughness={0.25}
+          metalness={0.5}
           side={THREE.DoubleSide}
         />
       </mesh>
 
       {/* Wheels */}
-      <Wheel position={[0.47, 0.14, 0.27]} />
-      <Wheel position={[-0.47, 0.14, 0.27]} mirror />
-      <Wheel position={[0.47, 0.14, -0.27]} />
-      <Wheel position={[-0.47, 0.14, -0.27]} mirror />
+      <Wheel position={[0.62, 0.15, 0.34]} />
+      <Wheel position={[-0.62, 0.15, 0.34]} mirror />
+      <Wheel position={[0.62, 0.15, -0.34]} />
+      <Wheel position={[-0.62, 0.15, -0.34]} mirror />
 
       {/* Wheel mount brackets */}
       {(
         [
-          [0.41, 0.22, 0.27],
-          [-0.41, 0.22, 0.27],
-          [0.41, 0.22, -0.27],
-          [-0.41, 0.22, -0.27],
+          [0.54, 0.22, 0.34],
+          [-0.54, 0.22, 0.34],
+          [0.54, 0.22, -0.34],
+          [-0.54, 0.22, -0.34],
         ] as [number, number, number][]
       ).map((pos, i) => (
         <mesh key={`brk-${i}`} position={pos}>
-          <boxGeometry args={[0.035, 0.14, 0.048]} />
+          <boxGeometry args={[0.04, 0.14, 0.055]} />
           <meshStandardMaterial
             color={C.dark}
-            roughness={0.32}
-            metalness={0.4}
+            roughness={0.28}
+            metalness={0.6}
           />
         </mesh>
       ))}
@@ -268,48 +277,62 @@ function RoverModel() {
       {/* Axle stubs */}
       {(
         [
-          [0.44, 0.14, 0.27],
-          [-0.44, 0.14, 0.27],
-          [0.44, 0.14, -0.27],
-          [-0.44, 0.14, -0.27],
+          [0.58, 0.15, 0.34],
+          [-0.58, 0.15, 0.34],
+          [0.58, 0.15, -0.34],
+          [-0.58, 0.15, -0.34],
         ] as [number, number, number][]
       ).map((pos, i) => (
         <mesh key={`axl-${i}`} position={pos} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.018, 0.018, 0.06, 8]} />
+          <cylinderGeometry args={[0.02, 0.02, 0.07, 8]} />
           <meshStandardMaterial
             color={C.darkMid}
-            roughness={0.3}
-            metalness={0.5}
+            roughness={0.28}
+            metalness={0.55}
           />
         </mesh>
       ))}
 
       {/* GPR sensor panel (underside) */}
-      <mesh position={[0, 0.255, 0.04]}>
-        <boxGeometry args={[0.44, 0.014, 0.28]} />
+      <mesh position={[0, 0.24, 0.04]}>
+        <boxGeometry args={[0.56, 0.015, 0.36]} />
         <meshStandardMaterial
           color="#15151a"
-          metalness={0.4}
-          roughness={0.5}
+          metalness={0.5}
+          roughness={0.4}
           emissive="#1d4ed8"
-          emissiveIntensity={0.15}
+          emissiveIntensity={0.2}
         />
       </mesh>
+
+      {/* Scan emitter bars */}
+      {[-0.08, 0, 0.08].map((z) => (
+        <mesh key={`sb-${z}`} position={[0, 0.22, z]}>
+          <boxGeometry args={[0.48, 0.005, 0.018]} />
+          <meshStandardMaterial
+            color="#2563eb"
+            emissive="#3b82f6"
+            emissiveIntensity={0.8}
+            transparent
+            opacity={0.9}
+          />
+        </mesh>
+      ))}
 
       {/* Scan paint marks on ground */}
       {(
         [
-          { x: -0.035, color: C.scanBlue },
+          { x: -0.04, color: C.scanBlue },
           { x: 0, color: "#ef4444" },
-          { x: 0.035, color: "#22c55e" },
+          { x: 0.04, color: "#22c55e" },
         ] as { x: number; color: string }[]
       ).map((m) => (
         <mesh
           key={m.x}
-          position={[m.x, 0.003, 0.42]}
+          position={[m.x, 0.003, 0.55]}
           rotation={[-Math.PI / 2, 0, 0]}
         >
-          <planeGeometry args={[0.022, 0.06]} />
+          <planeGeometry args={[0.024, 0.07]} />
           <meshBasicMaterial color={m.color} transparent opacity={0.6} />
         </mesh>
       ))}
@@ -320,7 +343,7 @@ function RoverModel() {
         position={[0, 0.003, 0.04]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
-        <circleGeometry args={[0.42, 32]} />
+        <circleGeometry args={[0.55, 32]} />
         <meshBasicMaterial color={C.scanBlue} transparent opacity={0.06} />
       </mesh>
     </group>
@@ -356,25 +379,25 @@ function InteractiveScene() {
 
   return (
     <>
-      <ambientLight intensity={0.22} color="#b8c4d4" />
-      <directionalLight position={[5, 8, 3]} intensity={0.85} color="#f0f4ff" />
+      <ambientLight intensity={0.12} color="#a0b4d0" />
+      <directionalLight position={[5, 8, 3]} intensity={1.0} color="#e8eeff" />
       <directionalLight
         position={[-3, 4, -2]}
-        intensity={0.3}
-        color="#8090a8"
+        intensity={0.25}
+        color="#6080a0"
       />
       <pointLight
         position={[0, 0.3, 0]}
-        intensity={0.4}
+        intensity={0.5}
         color="#3b82f6"
-        distance={2.5}
+        distance={3}
       />
       <spotLight
-        position={[-2, 5, -4]}
-        intensity={0.35}
-        angle={0.5}
+        position={[-2, 6, -5]}
+        intensity={0.3}
+        angle={0.4}
         penumbra={0.8}
-        color="#d0e0ff"
+        color="#e8eeff"
       />
 
       <group ref={groupRef}>
@@ -388,13 +411,13 @@ function InteractiveScene() {
 
       <ContactShadows
         position={[0, -0.01, 0]}
-        opacity={0.4}
-        blur={2}
+        opacity={0.35}
+        blur={2.5}
         far={3}
         color="#060610"
       />
 
-      <Environment preset="city" environmentIntensity={0.2} />
+      <Environment preset="city" environmentIntensity={0.15} />
     </>
   );
 }
