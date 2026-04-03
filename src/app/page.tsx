@@ -52,10 +52,6 @@ function problemDescriptionWithEmphasis(text: string) {
 }
 
 export default function Home() {
-  const contactHref = `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(
-    "Tracer by Eratos Robotics — Demo Request",
-  )}`;
-
   return (
     <main className="relative overflow-hidden">
       <Navbar />
@@ -293,7 +289,9 @@ export default function Home() {
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <a
-                href={contactHref}
+                href={siteConfig.bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_oklch(0.65_0.18_50_/_0.3)]"
               >
                 {siteConfig.cta.buttonText}

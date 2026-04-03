@@ -17,10 +17,6 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const contactHref = `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(
-    "Tracer by Eratos Robotics — Inquiry",
-  )}`;
-
   return (
     <header
       className={cn(
@@ -72,7 +68,9 @@ export function Navbar() {
             </a>
           ))}
           <a
-            href={contactHref}
+            href={siteConfig.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="rounded-full border border-white/[0.1] bg-white/[0.04] px-5 py-2 text-sm font-medium text-foreground transition-all hover:border-primary/30 hover:bg-primary/10"
           >
             Talk to us
@@ -107,7 +105,9 @@ export function Navbar() {
               </a>
             ))}
             <a
-              href={contactHref}
+              href={siteConfig.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-2 inline-flex items-center justify-center rounded-full border border-white/[0.1] bg-white/[0.04] px-5 py-2.5 text-sm font-medium text-foreground"
             >
               Talk to us

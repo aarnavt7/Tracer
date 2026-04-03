@@ -8,6 +8,8 @@ export const siteConfig = {
   productName: "Tracer",
   domain: "eratosrobotics.com",
   contactEmail: "hello@eratosrobotics.com",
+  /** Cal.com — hero “Request a demo”, contact CTA, navbar “Talk to us”. */
+  bookingUrl: "https://cal.com/aarnavt",
 
   navigation: [
     { label: "Technology", href: "#technology" },

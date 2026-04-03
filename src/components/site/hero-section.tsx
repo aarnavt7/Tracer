@@ -12,10 +12,6 @@ const RoverScene = dynamic(
 );
 
 export function HeroSection() {
-  const contactHref = `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(
-    "Tracer by Eratos Robotics — Demo Request",
-  )}`;
-
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-x-hidden">
       {/* Precision grid background */}
@@ -77,7 +73,9 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.9 }}
         >
           <a
-            href={contactHref}
+            href={siteConfig.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_oklch(0.65_0.18_50_/_0.3)]"
           >
             {siteConfig.hero.primaryCta}
