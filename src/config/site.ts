@@ -55,7 +55,7 @@ export const siteConfig = {
         number: "01",
         title: "Scan the site",
         description:
-          "Deploy Slater to autonomously traverse the work area with ground-coupled GPR and EMI, collecting dense subsurface data on a precision survey grid.",
+          "Deploy Tracer to autonomously traverse the work area with ground-coupled GPR and EMI, collecting dense subsurface data on a precision survey grid.",
       },
       {
         number: "02",
@@ -79,7 +79,7 @@ export const siteConfig = {
   },
 
   benefits: {
-    eyebrow: "Why teams choose Slater",
+    eyebrow: "Why teams choose Tracer",
     title: "Built for the firms that own underground risk.",
     items: [
       {
@@ -104,6 +104,44 @@ export const siteConfig = {
       },
     ],
   },
+
+  productMedia: [
+    {
+      src: "/images/ExcavationImg2.png",
+      eyebrow: "In the field",
+      title: "Dense coverage on real sites",
+      caption:
+        "Tracer traverses the work area on a precision grid so GPR and EMI data line up with survey-grade positioning.",
+    },
+    {
+      src: "/images/ExvacationImg.png",
+      eyebrow: "Site reality",
+      title: "Built for excavation environments",
+      caption:
+        "The same conditions where strikes happen — autonomous scanning before the cut, not after the surprise.",
+    },
+    {
+      src: "/images/MapImage3.png",
+      eyebrow: "Deliverable",
+      title: "Utility intelligence you can build on",
+      caption:
+        "Spatially registered maps with classified utilities and confidence — ready for engineers, not just field notes.",
+    },
+    {
+      src: "/images/MapImage1.png",
+      eyebrow: "Outputs",
+      title: "CAD / GIS aligned",
+      caption:
+        "Layers that drop into the tools your team already uses, with clear symbology and depth context.",
+    },
+    {
+      src: "/images/MapImage2.png",
+      eyebrow: "Clarity",
+      title: "Confidence where it matters",
+      caption:
+        "See not only where lines run, but how strongly the data supports each interpretation.",
+    },
+  ],
 
   technology: {
     eyebrow: "Technology",

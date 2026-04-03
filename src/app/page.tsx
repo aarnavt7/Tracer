@@ -26,6 +26,7 @@ import {
 import { Footer } from "@/components/site/footer";
 import { HeroSection } from "@/components/site/hero-section";
 import { Navbar } from "@/components/site/navbar";
+import { ProductMediaShowcase } from "@/components/site/product-media-showcase";
 import { SectionHeading } from "@/components/site/section-heading";
 import { UndergroundViz } from "@/components/site/underground-viz";
 import { siteConfig } from "@/config/site";
@@ -136,6 +137,10 @@ export default function Home() {
               description="Tracer fuses GPR, EMI, and precision positioning to build a spatially registered map of buried utilities — color-coded by type, scored by confidence."
               align="center"
             />
+          </AnimatedSection>
+
+          <AnimatedSection className="mt-16" delay={0.15}>
+            <ProductMediaShowcase />
           </AnimatedSection>
 
           <AnimatedSection className="mt-16" delay={0.2}>
