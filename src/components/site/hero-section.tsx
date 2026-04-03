@@ -1,0 +1,100 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { ArrowRight, ChevronDown } from "lucide-react";
+import dynamic from "next/dynamic";
+
+import { siteConfig } from "@/config/site";
+
+const RoverScene = dynamic(
+  () => import("./rover-scene").then((mod) => ({ default: mod.RoverScene })),
+  { ssr: false },
+);
+
+export function HeroSection() {
+  const contactHref = `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(
+    "Tracer by Eratos Robotics — Demo Request",
+  )}`;
+
+  return (
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
+      {/* Precision grid background */}
+      <div className="pointer-events-none absolute inset-0 mesh-background opacity-30 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
+
+      {/* Atmospheric glow */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-1/3 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/[0.06] blur-[120px]" />
+      </div>
+
+      {/* 3D Rover Scene */}
+      <div className="absolute inset-0 top-[5vh]">
+        <RoverScene />
+      </div>
+
+      {/* Content overlay */}
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-6 pt-24 text-center lg:px-10">
+        {/* Main headline */}
+        <motion.h1
+          className="mt-8 font-heading text-6xl font-bold leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl xl:text-9xl"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0, 1] }}
+        >
+          <span className="block text-gradient">
+            {siteConfig.hero.headline[0]}
+          </span>
+          <span className="block text-foreground/90">
+            {siteConfig.hero.headline[1]}
+          </span>
+        </motion.h1>
+
+        {/* Description */}
+        <motion.p
+          className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+        >
+          {siteConfig.hero.description}
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          className="mt-8 flex flex-col gap-3 sm:flex-row"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
+        >
+          <a
+            href={contactHref}
+            className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_oklch(0.62_0.2_255_/_0.3)]"
+          >
+            {siteConfig.hero.primaryCta}
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
+          <a
+            href="#technology"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-7 py-3 text-sm font-medium text-foreground transition-all hover:border-white/[0.15] hover:bg-white/[0.06]"
+          >
+            {siteConfig.hero.secondaryCta}
+          </a>
+        </motion.div>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+      >
+        <div className="flex flex-col items-center gap-2 text-muted-foreground/50">
+          <span className="text-[10px] uppercase tracking-[0.3em]">
+            Scroll
+          </span>
+          <ChevronDown className="size-4 animate-bounce" />
+        </div>
+      </motion.div>
+    </section>
+  );
+}
