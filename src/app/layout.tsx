@@ -22,6 +22,11 @@ export const metadata: Metadata = {
     default: "Tracer by Eratos Robotics — Subsurface Intelligence",
     template: "%s | Eratos Robotics",
   },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
   description:
     "Tracer is an autonomous rover that generates high-trust subsurface utility maps before excavation. Built by Eratos Robotics for SUE firms and contractors.",
   applicationName: "Eratos Robotics",

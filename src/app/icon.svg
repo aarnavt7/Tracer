@@ -1,7 +1,19 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" rx="18" fill="#11182A" />
-  <path d="M18 18H46" stroke="#F2BF56" stroke-width="4" stroke-linecap="round" />
-  <path d="M18 32H36" stroke="#F2BF56" stroke-width="4" stroke-linecap="round" />
-  <path d="M18 46H46" stroke="#F2BF56" stroke-width="4" stroke-linecap="round" />
-  <circle cx="44" cy="32" r="7" fill="#5377FF" />
+<svg width="64" height="64" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Eratos Robotics mark: concentric hexagons + center dot (same geometry as navbar / footer) -->
+  <rect width="28" height="28" rx="6" fill="#0c0f16" />
+  <path
+    d="M14 1.5L25.26 7.75V20.25L14 26.5L2.74 20.25V7.75L14 1.5Z"
+    fill="none"
+    stroke="#9aa3b2"
+    stroke-width="1.2"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M14 6L21.5 10.25V18.75L14 23L6.5 18.75V10.25L14 6Z"
+    fill="none"
+    stroke="#ea8c3c"
+    stroke-width="1"
+    stroke-linejoin="round"
+  />
+  <circle cx="14" cy="14.5" r="3" fill="#ea8c3c" />
 </svg>

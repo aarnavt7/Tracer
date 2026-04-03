@@ -17,18 +17,19 @@ import {
   Target,
   Zap,
 } from "lucide-react";
+import Image from "next/image";
 
 import {
   AnimatedSection,
   StaggerContainer,
   StaggerItem,
 } from "@/components/site/animated-section";
+import { DemoVideoSection } from "@/components/site/demo-video-section";
 import { Footer } from "@/components/site/footer";
 import { HeroSection } from "@/components/site/hero-section";
 import { Navbar } from "@/components/site/navbar";
-import { ProductMediaShowcase } from "@/components/site/product-media-showcase";
 import { SectionHeading } from "@/components/site/section-heading";
-import { UndergroundViz } from "@/components/site/underground-viz";
+import { SubsurfaceMapImage } from "@/components/site/subsurface-map-image";
 import { siteConfig } from "@/config/site";
 
 const PROBLEM_ICONS = [EyeOff, Clock, AlertTriangle];
@@ -58,6 +59,18 @@ export default function Home() {
             <h2 className="mt-5 max-w-4xl font-heading text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
               {siteConfig.problem.statement}
             </h2>
+            <div className="relative mt-8 max-w-5xl overflow-hidden rounded-2xl border border-white/[0.06] bg-black/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]">
+              <div className="relative aspect-[21/9] w-full sm:aspect-[2.2/1]">
+                <Image
+                  src={siteConfig.problem.heroImage.src}
+                  alt={siteConfig.problem.heroImage.alt}
+                  fill
+                  className="object-cover saturate-[0.88] contrast-[1.06]"
+                  sizes="(max-width: 1024px) 100vw, 1024px"
+                  priority={false}
+                />
+              </div>
+            </div>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               {siteConfig.problem.description}
             </p>
@@ -83,6 +96,25 @@ export default function Home() {
               );
             })}
           </StaggerContainer>
+        </div>
+      </section>
+
+      {/* ─── DEMO VIDEO ─────────────────────────────────── */}
+      <section className="relative py-24 lg:py-32">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <AnimatedSection>
+            <SectionHeading
+              eyebrow={siteConfig.demoVideo.sectionEyebrow}
+              title={siteConfig.demoVideo.sectionTitle}
+              description={siteConfig.demoVideo.sectionDescription}
+            />
+          </AnimatedSection>
+
+          <AnimatedSection className="mt-16" delay={0.1}>
+            <DemoVideoSection />
+          </AnimatedSection>
         </div>
       </section>
 
@@ -140,11 +172,7 @@ export default function Home() {
           </AnimatedSection>
 
           <AnimatedSection className="mt-16" delay={0.15}>
-            <ProductMediaShowcase />
-          </AnimatedSection>
-
-          <AnimatedSection className="mt-16" delay={0.2}>
-            <UndergroundViz />
+            <SubsurfaceMapImage />
           </AnimatedSection>
 
           {/* Stat callouts */}

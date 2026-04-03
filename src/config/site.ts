@@ -27,7 +27,11 @@ export const siteConfig = {
   problem: {
     statement: "Construction teams still dig half-blind.",
     description:
-      "Underground uncertainty causes delays, cost overruns, and dangerous utility strikes. The current process for knowing what\u2019s beneath before excavation is slow, fragmented, and unreliable.",
+      "More than 20,000 utility strikes occur each year due to incorrect or incomplete markings, driving over $30 billion in utility damages annually. Underground uncertainty still causes delays, cost overruns, and dangerous strikes \u2014 and the process for knowing what\u2019s beneath before excavation remains slow, fragmented, and unreliable.",
+    heroImage: {
+      src: "/images/ExcavationImg2.png",
+      alt: "Deep excavation with timber shoring, crews, and heavy equipment on a construction site.",
+    },
     cards: [
       {
         title: "Private utility uncertainty",
@@ -105,43 +109,29 @@ export const siteConfig = {
     ],
   },
 
-  productMedia: [
+  demoVideo: {
+    sectionEyebrow: "See Tracer in context",
+    sectionTitle: "From the field to the map.",
+    sectionDescription:
+      "Real sites, autonomous scanning, and deliverables your team can build on — before the four-step workflow below.",
+    overlayEyebrow: "Demo",
+    overlayTitle: "Tracer in motion",
+    overlayCaption:
+      "Autonomous traversal and subsurface sensing on site — the same rover-first workflow, in action.",
+    src: "/videos/TracerDemoVideo.mp4",
+  },
+
+  /** CAD/GIS-style maps in the subsurface section, shown side by side (MapImage1, MapImage3). */
+  subsurfaceMapImages: [
     {
-      src: "/images/ExcavationImg2.png",
-      eyebrow: "In the field",
-      title: "Dense coverage on real sites",
-      caption:
-        "Tracer traverses the work area on a precision grid so GPR and EMI data line up with survey-grade positioning.",
-    },
-    {
-      src: "/images/ExvacationImg.png",
-      eyebrow: "Site reality",
-      title: "Built for excavation environments",
-      caption:
-        "The same conditions where strikes happen — autonomous scanning before the cut, not after the surprise.",
+      src: "/images/MapImage1.png",
+      alt: "Engineering-aligned utility map output for CAD or GIS workflows.",
     },
     {
       src: "/images/MapImage3.png",
-      eyebrow: "Deliverable",
-      title: "Utility intelligence you can build on",
-      caption:
-        "Spatially registered maps with classified utilities and confidence — ready for engineers, not just field notes.",
+      alt: "Subsurface utility map with classified buried lines and confidence visualization.",
     },
-    {
-      src: "/images/MapImage1.png",
-      eyebrow: "Outputs",
-      title: "CAD / GIS aligned",
-      caption:
-        "Layers that drop into the tools your team already uses, with clear symbology and depth context.",
-    },
-    {
-      src: "/images/MapImage2.png",
-      eyebrow: "Clarity",
-      title: "Confidence where it matters",
-      caption:
-        "See not only where lines run, but how strongly the data supports each interpretation.",
-    },
-  ],
+  ] as const,
 
   technology: {
     eyebrow: "Technology",
