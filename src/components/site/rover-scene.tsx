@@ -20,8 +20,9 @@ const C = {
   glowOrange: "#e8943c",
 };
 
-/** Tread rings + rubber sheen read as molded polymer; no external textures (PBR + geometry). */
-const TREAD_RADII = [0.136, 0.144, 0.152, 0.158] as const;
+const TIRE_R = 0.152;
+const RIM_WELL_R = 0.118;
+const HUB_R = 0.066;
 
 function Wheel({
   position,
@@ -30,11 +31,11 @@ function Wheel({
   position: [number, number, number];
   mirror?: boolean;
 }) {
-  const capX = mirror ? -0.048 : 0.048;
+  const capX = mirror ? -0.054 : 0.054;
   return (
     <group position={position}>
       <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
-        <cylinderGeometry args={[0.15, 0.15, 0.08, 48]} />
+        <cylinderGeometry args={[TIRE_R, TIRE_R, 0.092, 48]} />
         <meshPhysicalMaterial
           color={C.tire}
           roughness={0.94}
@@ -46,61 +47,59 @@ function Wheel({
           sheenColor="#7a3d22"
         />
       </mesh>
-      {TREAD_RADII.map((radius, i) => (
-        <mesh
-          key={`tr-${radius}`}
-          rotation={[0, 0, Math.PI / 2]}
-          castShadow
-        >
-          <torusGeometry args={[radius, 0.0042, 5, 56]} />
-          <meshPhysicalMaterial
-            color={C.tireDeep}
-            roughness={0.97}
-            metalness={0}
-            clearcoat={0.02}
-            clearcoatRoughness={1}
-            sheen={0.35}
-            sheenRoughness={0.9}
-            sheenColor="#5c3018"
-          />
-        </mesh>
-      ))}
-      {[-0.03, 0, 0.03].map((off) => (
-        <mesh
-          key={off}
-          position={[off, 0, 0]}
-          rotation={[0, 0, Math.PI / 2]}
-          castShadow
-        >
-          <torusGeometry args={[0.15, 0.0028, 4, 40]} />
-          <meshPhysicalMaterial
-            color={C.tireDeep}
-            roughness={0.96}
-            metalness={0}
-            sheen={0.28}
-            sheenRoughness={0.92}
-            sheenColor="#4a2814"
-          />
-        </mesh>
-      ))}
       <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
-        <cylinderGeometry args={[0.068, 0.068, 0.085, 24]} />
+        <cylinderGeometry args={[RIM_WELL_R, RIM_WELL_R, 0.038, 32]} />
         <meshPhysicalMaterial
-          color={C.darkMid}
-          roughness={0.35}
-          metalness={0.55}
-          clearcoat={0.25}
-          clearcoatRoughness={0.55}
+          color="#14141c"
+          roughness={0.88}
+          metalness={0.12}
+          clearcoat={0.08}
+          clearcoatRoughness={0.75}
         />
       </mesh>
-      <mesh position={[capX, 0, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
-        <cylinderGeometry args={[0.035, 0.035, 0.006, 12]} />
+      <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
+        <cylinderGeometry args={[HUB_R, HUB_R, 0.09, 28]} />
         <meshPhysicalMaterial
-          color={C.dark}
-          roughness={0.25}
-          metalness={0.65}
-          clearcoat={0.4}
-          clearcoatRoughness={0.45}
+          color={C.darkMid}
+          roughness={0.38}
+          metalness={0.52}
+          clearcoat={0.22}
+          clearcoatRoughness={0.58}
+        />
+      </mesh>
+      {Array.from({ length: 6 }, (_, i) => {
+        const a = (i / 6) * Math.PI * 2;
+        const mid = 0.03;
+        return (
+          <mesh
+            key={`sp-${i}`}
+            position={[
+              0,
+              Math.cos(a) * mid,
+              Math.sin(a) * mid,
+            ]}
+            rotation={[0, a, 0]}
+            castShadow
+          >
+            <boxGeometry args={[0.078, 0.009, 0.016]} />
+            <meshPhysicalMaterial
+              color={C.dark}
+              roughness={0.32}
+              metalness={0.58}
+              clearcoat={0.2}
+              clearcoatRoughness={0.52}
+            />
+          </mesh>
+        );
+      })}
+      <mesh position={[capX, 0, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
+        <cylinderGeometry args={[0.038, 0.036, 0.009, 18]} />
+        <meshPhysicalMaterial
+          color="#0a0a10"
+          roughness={0.35}
+          metalness={0.72}
+          clearcoat={0.45}
+          clearcoatRoughness={0.35}
         />
       </mesh>
     </group>
