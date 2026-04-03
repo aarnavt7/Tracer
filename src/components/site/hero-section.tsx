@@ -67,7 +67,7 @@ export function HeroSection() {
         >
           <a
             href={contactHref}
-            className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_oklch(0.62_0.2_255_/_0.3)]"
+            className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_oklch(0.65_0.18_50_/_0.3)]"
           >
             {siteConfig.hero.primaryCta}
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />

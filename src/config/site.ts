@@ -55,7 +55,7 @@ export const siteConfig = {
         number: "01",
         title: "Scan the site",
         description:
-          "Deploy Tracer to autonomously traverse the work area with ground-coupled GPR and EMI, collecting dense subsurface data on a precision survey grid.",
+          "Deploy Slater to autonomously traverse the work area with ground-coupled GPR and EMI, collecting dense subsurface data on a precision survey grid.",
       },
       {
         number: "02",
@@ -79,7 +79,7 @@ export const siteConfig = {
   },
 
   benefits: {
-    eyebrow: "Why teams choose Tracer",
+    eyebrow: "Why teams choose Slater",
     title: "Built for the firms that own underground risk.",
     items: [
       {

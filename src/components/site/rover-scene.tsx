@@ -16,7 +16,8 @@ const C = {
   tireDeep: "#a86030",
   lens: "#080810",
   sensorPane: "#c8d0dc",
-  scanBlue: "#3b82f6",
+  accentOrange: "#d4803a",
+  glowOrange: "#e8943c",
 };
 
 function Wheel({
@@ -92,22 +93,26 @@ function RoverBody() {
           metalness={0.5}
         />
       </mesh>
-      {/* Mid accent ring */}
+      {/* Mid accent ring — orange glint */}
       <mesh position={[0, 0.32, 0]}>
         <cylinderGeometry args={[0.545, 0.55, 0.03, 8]} />
         <meshStandardMaterial
-          color={C.darkMid}
-          roughness={0.28}
-          metalness={0.6}
+          color="#2a2018"
+          roughness={0.25}
+          metalness={0.65}
+          emissive={C.accentOrange}
+          emissiveIntensity={0.35}
         />
       </mesh>
-      {/* Upper accent ring */}
+      {/* Upper accent ring — subtle orange */}
       <mesh position={[0, 0.60, 0]}>
         <cylinderGeometry args={[0.485, 0.49, 0.02, 8]} />
         <meshStandardMaterial
-          color={C.darkMid}
-          roughness={0.28}
-          metalness={0.6}
+          color="#2a2018"
+          roughness={0.25}
+          metalness={0.65}
+          emissive={C.accentOrange}
+          emissiveIntensity={0.15}
         />
       </mesh>
       {/* Top plate */}
@@ -216,8 +221,8 @@ function RoverModel() {
               color={C.sensorPane}
               roughness={0.15}
               metalness={0.2}
-              emissive="#3b82f6"
-              emissiveIntensity={0.06}
+              emissive={C.glowOrange}
+              emissiveIntensity={0.08}
             />
           </mesh>
         </group>
@@ -300,8 +305,8 @@ function RoverModel() {
           color="#15151a"
           metalness={0.5}
           roughness={0.4}
-          emissive="#1d4ed8"
-          emissiveIntensity={0.2}
+          emissive={C.accentOrange}
+          emissiveIntensity={0.25}
         />
       </mesh>
 
@@ -310,8 +315,8 @@ function RoverModel() {
         <mesh key={`sb-${z}`} position={[0, 0.22, z]}>
           <boxGeometry args={[0.48, 0.005, 0.018]} />
           <meshStandardMaterial
-            color="#2563eb"
-            emissive="#3b82f6"
+            color="#a05820"
+            emissive={C.glowOrange}
             emissiveIntensity={0.8}
             transparent
             opacity={0.9}
@@ -322,7 +327,7 @@ function RoverModel() {
       {/* Scan paint marks on ground */}
       {(
         [
-          { x: -0.04, color: C.scanBlue },
+          { x: -0.04, color: C.accentOrange },
           { x: 0, color: "#ef4444" },
           { x: 0.04, color: "#22c55e" },
         ] as { x: number; color: string }[]
@@ -344,7 +349,7 @@ function RoverModel() {
         rotation={[-Math.PI / 2, 0, 0]}
       >
         <circleGeometry args={[0.55, 32]} />
-        <meshBasicMaterial color={C.scanBlue} transparent opacity={0.06} />
+        <meshBasicMaterial color={C.glowOrange} transparent opacity={0.06} />
       </mesh>
     </group>
   );
@@ -389,7 +394,7 @@ function InteractiveScene() {
       <pointLight
         position={[0, 0.3, 0]}
         intensity={0.5}
-        color="#3b82f6"
+        color={C.glowOrange}
         distance={3}
       />
       <spotLight
