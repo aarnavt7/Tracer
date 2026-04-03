@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "construction robotics",
   ],
   openGraph: {
-    title: "Tracer by Eratos Robotics — See Below. Dig with Confidence.",
+    title: "Tracer by Eratos Robotics - Subsurface Intelligence",
     description:
       "Autonomous pre-dig subsurface intelligence for private-site excavation. Stop digging blind.",
     type: "website",

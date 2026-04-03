@@ -10,9 +10,11 @@ const UTILITY_LINES = [
   { depth: 310, color: "#22c55e", label: "Sewer", width: 20 },
 ];
 
+const ACCENT = "#d4803a";
+
 export function UndergroundViz() {
   return (
-    <div className="relative mx-auto aspect-[16/9] max-w-4xl overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-b from-[#0c1220] to-[#0a0e18]">
+    <div className="relative mx-auto aspect-[16/9] max-w-4xl overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-b from-[#120e0a] to-[#0e0a08]">
       <svg
         viewBox="0 0 800 450"
         className="h-full w-full"
@@ -24,13 +26,13 @@ export function UndergroundViz() {
           y1="60"
           x2="800"
           y2="60"
-          stroke="#2a3548"
+          stroke="#3a2e22"
           strokeWidth="2"
         />
         <text
           x="20"
           y="50"
-          fill="#4b5563"
+          fill="#5a4a3a"
           fontSize="10"
           fontFamily="monospace"
         >
@@ -45,14 +47,14 @@ export function UndergroundViz() {
               y1={60 + d * 70}
               x2="800"
               y2={60 + d * 70}
-              stroke="#1a2233"
+              stroke="#221a12"
               strokeWidth="0.5"
               strokeDasharray="4 8"
             />
             <text
               x="760"
               y={55 + d * 70}
-              fill="#2a3548"
+              fill="#3a2e22"
               fontSize="8"
               fontFamily="monospace"
             >
@@ -75,9 +77,9 @@ export function UndergroundViz() {
               y1="40"
               x2={x - 20 + i * 10}
               y2="420"
-              stroke="#3b82f6"
+              stroke={ACCENT}
               strokeWidth="1"
-              strokeOpacity="0.12"
+              strokeOpacity="0.14"
               initial={{ pathLength: 0 }}
               whileInView={{ pathLength: 1 }}
               viewport={{ once: true }}
@@ -144,6 +146,7 @@ export function UndergroundViz() {
           viewport={{ once: true }}
           transition={{ duration: 1 }}
         >
+          {/* Body */}
           <rect
             x="370"
             y="22"
@@ -160,34 +163,43 @@ export function UndergroundViz() {
             rx="2"
             fill="#18181d"
           />
-          <circle cx="376" cy="39" r="5" fill="#0a0a0e" />
-          <circle cx="424" cy="39" r="5" fill="#0a0a0e" />
+          {/* Wheels (orange) */}
+          <circle cx="376" cy="39" r="5" fill="#c87840" />
+          <circle cx="424" cy="39" r="5" fill="#c87840" />
+          {/* Scan bar (orange) */}
           <rect
             x="386"
             y="37"
             width="28"
             height="2.5"
             rx="1"
-            fill="#3b82f6"
+            fill={ACCENT}
             opacity="0.8"
           />
-          {/* Sensor mast */}
+          {/* Top module */}
           <rect
-            x="398"
+            x="393"
             y="6"
-            width="2"
+            width="14"
             height="8"
-            rx="1"
-            fill="#3a3a40"
+            rx="2"
+            fill="#1a1a1e"
           />
-          <circle cx="399" cy="4" r="3" fill="#1a1a1e" />
+          <rect
+            x="397"
+            y="2"
+            width="6"
+            height="4"
+            rx="1"
+            fill="#2a2a2e"
+          />
         </motion.g>
       </svg>
 
       {/* Edge fades */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#0c1220] to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#0a0e18] to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0a0e18] to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#120e0a] to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#0e0a08] to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0e0a08] to-transparent" />
     </div>
   );
 }
