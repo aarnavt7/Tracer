@@ -37,6 +37,20 @@ const STEP_ICONS = [Scan, Layers, Target, FileOutput];
 const BENEFIT_ICONS = [Zap, RotateCw, Cpu, FileCheck2];
 const TECH_ICONS = [Radio, Activity, MapPin, Cpu, ShieldCheck, Navigation];
 
+const PROBLEM_STAT_BOLD_SPLIT = /(20,000|\$30 billion)/;
+
+function problemDescriptionWithEmphasis(text: string) {
+  return text.split(PROBLEM_STAT_BOLD_SPLIT).map((part, i) =>
+    part === "20,000" || part === "$30 billion" ? (
+      <strong key={i} className="font-semibold text-foreground">
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
+  );
+}
+
 export default function Home() {
   const contactHref = `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(
     "Tracer by Eratos Robotics — Demo Request",
@@ -72,7 +86,7 @@ export default function Home() {
               </div>
             </div>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              {siteConfig.problem.description}
+              {problemDescriptionWithEmphasis(siteConfig.problem.description)}
             </p>
           </AnimatedSection>
 
