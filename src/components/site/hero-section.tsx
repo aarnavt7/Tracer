@@ -32,10 +32,10 @@ export function HeroSection() {
       </div>
 
       {/* Content overlay */}
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-6 pt-24 text-center lg:px-10">
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-6 pt-16 text-center lg:px-10">
         {/* Main headline */}
         <motion.h1
-          className="mt-8 font-heading text-6xl font-bold leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl xl:text-9xl"
+          className="mt-4 font-heading text-6xl font-bold leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl xl:text-9xl"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.1, 0, 1] }}
@@ -83,7 +83,7 @@ export function HeroSection() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-3 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}

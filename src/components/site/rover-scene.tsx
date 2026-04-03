@@ -358,6 +358,7 @@ function RoverModel() {
 function InteractiveScene() {
   const groupRef = useRef<THREE.Group>(null);
   const mouse = useRef({ x: 0, y: 0 });
+  const entrance = useRef({ progress: 0, done: false });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -368,8 +369,21 @@ function InteractiveScene() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!groupRef.current) return;
+
+    if (!entrance.current.done) {
+      entrance.current.progress = Math.min(
+        entrance.current.progress + delta * 0.6,
+        1,
+      );
+      const t = 1 - Math.pow(1 - entrance.current.progress, 3);
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(-0.25, 0, t);
+      groupRef.current.position.y = THREE.MathUtils.lerp(-0.15, 0, t);
+      if (entrance.current.progress >= 1) entrance.current.done = true;
+      return;
+    }
+
     groupRef.current.rotation.y = THREE.MathUtils.lerp(
       groupRef.current.rotation.y,
       mouse.current.x * 0.08,
@@ -410,7 +424,7 @@ function InteractiveScene() {
       </group>
 
       <gridHelper
-        args={[30, 60, "#1a2744", "#111827"]}
+        args={[30, 60, "#2a1a0a", "#18120a"]}
         position={[0, 0, 0]}
       />
 

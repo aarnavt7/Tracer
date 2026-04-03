@@ -32,7 +32,28 @@ export function Navbar() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
         <Link href="/" className="flex items-center gap-3">
-      
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="shrink-0"
+          >
+            <path
+              d="M14 1.5L25.26 7.75V20.25L14 26.5L2.74 20.25V7.75L14 1.5Z"
+              stroke="currentColor"
+              strokeWidth="1.2"
+              className="text-foreground/60"
+            />
+            <path
+              d="M14 6L21.5 10.25V18.75L14 23L6.5 18.75V10.25L14 6Z"
+              stroke="currentColor"
+              strokeWidth="1"
+              className="text-primary/80"
+            />
+            <circle cx="14" cy="14.5" r="3" fill="currentColor" className="text-primary" />
+          </svg>
           <span className="hidden flex-col sm:flex">
             <span className="font-heading text-sm font-medium uppercase tracking-[0.22em] text-foreground">
               {siteConfig.name}
