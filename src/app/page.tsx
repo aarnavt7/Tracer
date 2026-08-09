@@ -133,7 +133,7 @@ export default function Home() {
                 <StaggerItem key={step.number}>
                   <div className="relative h-full rounded-2xl border border-border bg-card/40 p-6 transition-all duration-300 hover:border-primary/20 hover:bg-card/60">
                     <div className="flex items-center justify-between">
-                      <span className="font-heading text-3xl font-bold text-primary/30">
+                      <span className="how-step-number font-heading text-3xl font-bold text-primary/30">
                         {step.number}
                       </span>
                       <Icon className="size-5 text-primary/60" />

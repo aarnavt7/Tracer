@@ -109,17 +109,17 @@
   --card-foreground: oklch(0.17 0 0);
   --popover: oklch(0.98 0 0);
   --popover-foreground: oklch(0.17 0 0);
-  --primary: oklch(0.24 0 0);
+  --primary: oklch(0.56 0.17 48);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.92 0 0);
   --secondary-foreground: oklch(0.22 0 0);
   --muted: oklch(0.91 0 0);
   --muted-foreground: oklch(0.42 0 0);
-  --accent: oklch(0.24 0 0);
+  --accent: oklch(0.56 0.17 48);
   --accent-foreground: oklch(0.985 0 0);
   --border: oklch(0.2 0 0 / 16%);
   --input: oklch(0.2 0 0 / 22%);
-  --ring: oklch(0.3 0 0);
+  --ring: oklch(0.56 0.17 48);
   --chart-1: oklch(0.25 0 0);
   --chart-2: oklch(0.38 0 0);
   --chart-3: oklch(0.5 0 0);
@@ -127,19 +127,19 @@
   --chart-5: oklch(0.74 0 0);
   --sidebar: oklch(0.97 0 0);
   --sidebar-foreground: oklch(0.17 0 0);
-  --sidebar-primary: oklch(0.24 0 0);
+  --sidebar-primary: oklch(0.56 0.17 48);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.92 0 0);
   --sidebar-accent-foreground: oklch(0.22 0 0);
   --sidebar-border: oklch(0.2 0 0 / 16%);
-  --sidebar-ring: oklch(0.3 0 0);
+  --sidebar-ring: oklch(0.56 0.17 48);
   --body-glow-top: oklch(0.93 0 0);
   --body-glow-side: oklch(0.88 0 0 / 0.35);
   --mesh-line: oklch(0.3 0 0 / 0.1);
-  --gradient-start: oklch(0.18 0 0);
-  --gradient-middle: oklch(0.38 0 0);
-  --gradient-end: oklch(0.22 0 0);
-  --primary-glow: oklch(0.2 0 0 / 0.22);
+  --gradient-start: oklch(0.58 0.17 48);
+  --gradient-middle: oklch(0.64 0.15 38);
+  --gradient-end: oklch(0.52 0.16 52);
+  --primary-glow: oklch(0.56 0.17 48 / 0.25);
   --inset-highlight: oklch(1 0 0 / 80%);
   --panel-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.14);
   --hero-scrim: radial-gradient(
@@ -236,7 +236,12 @@
   }
 
   [data-theme="light"] .hero-rover canvas {
-    filter: grayscale(1) invert(1) contrast(0.9);
+    filter: saturate(1.35) contrast(0.9);
+    opacity: 0.42;
+  }
+
+  [data-theme="light"] .how-step-number {
+    color: color-mix(in oklch, var(--primary) 78%, var(--foreground));
   }
 }
 
