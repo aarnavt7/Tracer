@@ -227,12 +227,12 @@ export const siteConfig = {
       },
       {
         name: "Aarnav Trivedi",
-        role: "Co-founder & CTO",
+        role: "Co-founder",
         bio: "Aarnav leads Eratos’s technical roadmap, software architecture, and engineering execution.",
         initials: "AT",
         image: {
           src: "/images/team/aarnav-trivedi.png",
-          alt: "Aarnav Trivedi, Co-founder and CTO of Eratos Robotics.",
+          alt: "Aarnav Trivedi, Co-founder of Eratos Robotics.",
           className: "object-cover object-center",
         },
       },
