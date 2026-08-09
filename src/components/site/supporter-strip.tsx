@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { siteConfig } from "@/config/site";
 
 const { partnerships } = siteConfig;
@@ -16,18 +18,31 @@ export function SupporterStrip() {
             </p>
             <ul className="flex flex-1 items-center justify-between gap-3">
               {partnerships.supporters.map((supporter) => (
-                <li key={supporter}>
-                  <span className="inline-flex min-w-20 items-center justify-center rounded-full border border-border bg-card/40 px-4 py-2 font-heading text-sm font-semibold tracking-tight text-foreground/80">
-                    {supporter}
-                  </span>
+                <li
+                  key={supporter.name}
+                  className="flex min-w-24 justify-center"
+                >
+                  <Image
+                    src={supporter.image.src}
+                    alt={supporter.image.alt}
+                    width={supporter.image.width}
+                    height={supporter.image.height}
+                    className="supporter-logo h-auto max-h-10 w-auto max-w-32 object-contain"
+                  />
                 </li>
               ))}
             </ul>
           </div>
 
           <div className="border-l border-border pl-8 lg:pl-10">
-            <span className="inline-flex rounded-md border border-foreground/25 bg-card/60 px-4 py-2 font-heading text-xs font-medium tracking-wide text-foreground">
-              {partnerships.backer}
+            <span className="inline-flex rounded-md border border-foreground/25 bg-card/60 px-4 py-2">
+              <Image
+                src={partnerships.backer.image.src}
+                alt={partnerships.backer.image.alt}
+                width={partnerships.backer.image.width}
+                height={partnerships.backer.image.height}
+                className="supporter-logo h-auto max-h-12 w-auto max-w-44 object-contain"
+              />
             </span>
           </div>
 

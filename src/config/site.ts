@@ -27,8 +27,44 @@ export const siteConfig = {
   },
 
   partnerships: {
-    supporters: ["1517", "Emergent", "Eigen"],
-    backer: "Backed by Founders Inc.",
+    supporters: [
+      {
+        name: "1517",
+        image: {
+          src: "/images/supporters/1517.png",
+          width: 2560,
+          height: 1340,
+          alt: "1517",
+        },
+      },
+      {
+        name: "Emergent",
+        image: {
+          src: "/images/supporters/emergent.png",
+          width: 622,
+          height: 200,
+          alt: "Emergent",
+        },
+      },
+      {
+        name: "Eigen",
+        image: {
+          src: "/images/supporters/eigen.png",
+          width: 472,
+          height: 78,
+          alt: "Eigen",
+        },
+      },
+    ],
+    backer: {
+      name: "Backed by Founders Inc.",
+      image: {
+        src: "/images/supporters/founders-inc.png",
+        width: 1966,
+        height: 662,
+        alt: "Backed by Founders Inc.",
+      },
+    },
     designPartner: "Design partner — Bernat’s Associates",
   },
 
@@ -181,40 +217,57 @@ export const siteConfig = {
       {
         name: "Safwaan Majid",
         role: "Founder & CEO",
-        bio: "A high school student with seven years of robotics experience, Safwaan designed and built Eratos’s physical rover and leads the company’s product direction as head of product.",
+        bio: "Safwaan leads Eratos’s product direction and physical rover development, drawing on seven years of robotics experience.",
         initials: "SM",
         image: {
           src: "/images/team/safwaan-majid.png",
           alt: "Safwaan Majid, Founder and CEO of Eratos Robotics.",
+          className: "scale-[1.14] object-cover object-center",
         },
       },
       {
         name: "Aarnav Trivedi",
-        role: "Founder & CTO",
+        role: "Co-founder & CTO",
         bio: "Aarnav leads Eratos’s technical roadmap, software architecture, and engineering execution.",
         initials: "AT",
-        image: null,
+        image: {
+          src: "/images/team/aarnav-trivedi.png",
+          alt: "Aarnav Trivedi, Co-founder and CTO of Eratos Robotics.",
+          className: "object-cover object-center",
+        },
       },
       {
         name: "Alex Fagel",
         role: "COO",
-        bio: "A psychology student at Dartmouth, Alex leads operations, team coordination, and organizational execution.",
+        bio: "A finance student at Dartmouth, Alex leads operations, team coordination, and organizational execution.",
         initials: "AF",
-        image: null,
+        image: {
+          src: "/images/team/alex-fagel.jpeg",
+          alt: "Alex Fagel, COO of Eratos Robotics.",
+          className: "object-cover object-center",
+        },
       },
       {
         name: "Monish Saravana",
         role: "CMO",
         bio: "A computer science student at Harvard, Monish leads Eratos’s marketing, positioning, and go-to-market strategy.",
         initials: "MS",
-        image: null,
+        image: {
+          src: "/images/team/monish-saravana.jpeg",
+          alt: "Monish Saravana, CMO of Eratos Robotics.",
+          className: "object-cover object-center",
+        },
       },
       {
         name: "Pravith Munipalle",
         role: "CFO",
         bio: "A finance student at Cornell, Pravith leads financial planning, budgeting, and business strategy.",
         initials: "PM",
-        image: null,
+        image: {
+          src: "/images/team/pravith-munipalle.jpeg",
+          alt: "Pravith Munipalle, CFO of Eratos Robotics.",
+          className: "object-cover object-center",
+        },
       },
     ],
   },
