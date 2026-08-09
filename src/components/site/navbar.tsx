@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { ThemeToggle } from "@/components/site/theme-toggle";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +23,7 @@ export function Navbar() {
       className={cn(
         "fixed top-0 right-0 left-0 z-50 transition-all duration-500",
         scrolled
-          ? "border-b border-white/[0.06] bg-background/80 backdrop-blur-2xl"
+          ? "border-b border-border bg-background/80 backdrop-blur-2xl"
           : "bg-transparent",
       )}
     >
@@ -67,32 +68,36 @@ export function Navbar() {
               {item.label}
             </a>
           ))}
+          <ThemeToggle />
           <a
             href={siteConfig.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-white/[0.1] bg-white/[0.04] px-5 py-2 text-sm font-medium text-foreground transition-all hover:border-primary/30 hover:bg-primary/10"
+            className="rounded-full border border-border bg-card/50 px-5 py-2 text-sm font-medium text-foreground transition-all hover:border-primary/30 hover:bg-primary/10"
           >
             Talk to us
           </a>
         </nav>
 
-        <button
-          type="button"
-          className="text-foreground md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? (
-            <X className="size-5" />
-          ) : (
-            <Menu className="size-5" />
-          )}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="inline-flex size-9 items-center justify-center rounded-full text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? (
+              <X className="size-5" />
+            ) : (
+              <Menu className="size-5" />
+            )}
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-white/[0.06] bg-background/95 px-6 py-6 backdrop-blur-2xl md:hidden">
+        <div className="border-t border-border bg-background/95 px-6 py-6 backdrop-blur-2xl md:hidden">
           <nav className="flex flex-col gap-4">
             {siteConfig.navigation.map((item) => (
               <a
@@ -108,7 +113,7 @@ export function Navbar() {
               href={siteConfig.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center justify-center rounded-full border border-white/[0.1] bg-white/[0.04] px-5 py-2.5 text-sm font-medium text-foreground"
+              className="mt-2 inline-flex items-center justify-center rounded-full border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground"
             >
               Talk to us
             </a>

@@ -26,6 +26,12 @@ export const siteConfig = {
     secondaryCta: "View technology",
   },
 
+  partnerships: {
+    supporters: ["1517", "Emergent", "Eigen"],
+    backer: "Backed by Founders Inc.",
+    designPartner: "Design partner — Bernat’s Associates",
+  },
+
   problem: {
     statement: "Construction teams still dig half-blind.",
     description:
@@ -164,6 +170,51 @@ export const siteConfig = {
         title: "Autonomous path planning",
         description:
           "Coverage-optimal navigation autonomously drives scan patterns across the site, ensuring complete subsurface mapping without manual guidance.",
+      },
+    ],
+  },
+
+  team: {
+    eyebrow: "Team",
+    title: "Meet the team.",
+    members: [
+      {
+        name: "Safwaan Majid",
+        role: "Founder & CEO",
+        bio: "A high school student with seven years of robotics experience, Safwaan designed and built Eratos’s physical rover and leads the company’s product direction as head of product.",
+        initials: "SM",
+        image: {
+          src: "/images/team/safwaan-majid.png",
+          alt: "Safwaan Majid, Founder and CEO of Eratos Robotics.",
+        },
+      },
+      {
+        name: "Aarnav Trivedi",
+        role: "Founder & CTO",
+        bio: "Aarnav leads Eratos’s technical roadmap, software architecture, and engineering execution.",
+        initials: "AT",
+        image: null,
+      },
+      {
+        name: "Alex Fagel",
+        role: "COO",
+        bio: "A psychology student at Dartmouth, Alex leads operations, team coordination, and organizational execution.",
+        initials: "AF",
+        image: null,
+      },
+      {
+        name: "Monish Saravana",
+        role: "CMO",
+        bio: "A computer science student at Harvard, Monish leads Eratos’s marketing, positioning, and go-to-market strategy.",
+        initials: "MS",
+        image: null,
+      },
+      {
+        name: "Pravith Munipalle",
+        role: "CFO",
+        bio: "A finance student at Cornell, Pravith leads financial planning, budgeting, and business strategy.",
+        initials: "PM",
+        image: null,
       },
     ],
   },

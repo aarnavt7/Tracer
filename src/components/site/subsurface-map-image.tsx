@@ -10,7 +10,7 @@ export function SubsurfaceMapImage() {
       {maps.map((map) => (
         <div
           key={map.src}
-          className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/[0.06] bg-black/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
+          className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border bg-card/40 shadow-[inset_0_1px_0_0_var(--inset-highlight)]"
         >
           <Image
             src={map.src}

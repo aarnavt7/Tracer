@@ -2,7 +2,7 @@ import { siteConfig } from "@/config/site";
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.06]">
+    <footer className="border-t border-border">
       <div className="mx-auto max-w-7xl px-6 py-8 lg:px-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">

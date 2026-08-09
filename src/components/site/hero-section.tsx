@@ -26,7 +26,7 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-24 bg-gradient-to-t from-background to-transparent" />
 
       {/* 3D Rover Scene */}
-      <div className="absolute inset-0 top-[5vh] z-0">
+      <div className="hero-rover absolute inset-0 top-[5vh] z-0">
         <RoverScene />
       </div>
 
@@ -35,7 +35,7 @@ export function HeroSection() {
         className="pointer-events-none absolute inset-0 z-[5]"
         aria-hidden
       >
-        <div className="absolute inset-x-0 top-0 h-[min(58vh,520px)] bg-[radial-gradient(ellipse_78%_88%_at_50%_16%,oklch(0.055_0.022_260/0.78)_0%,oklch(0.075_0.018_260/0.42)_42%,transparent_76%)]" />
+        <div className="hero-scrim absolute inset-x-0 top-0 h-[min(58vh,520px)]" />
       </div>
 
       {/* Content overlay */}
@@ -50,7 +50,7 @@ export function HeroSection() {
           <span className="block text-gradient">
             {siteConfig.hero.headline[0]}
           </span>
-          <span className="block text-foreground/90 [text-shadow:0_2px_28px_oklch(0.06_0.02_260/0.95),0_1px_3px_oklch(0.04_0.02_260/0.85)]">
+          <span className="hero-title-secondary block text-foreground/90">
             {siteConfig.hero.headline[1]}
           </span>
         </motion.h1>
@@ -76,14 +76,14 @@ export function HeroSection() {
             href={siteConfig.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_oklch(0.65_0.18_50_/_0.3)]"
+            className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_var(--primary-glow)]"
           >
             {siteConfig.hero.primaryCta}
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </a>
           <a
             href="#technology"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-7 py-3 text-sm font-medium text-foreground transition-all hover:border-white/[0.15] hover:bg-white/[0.06]"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card/40 px-7 py-3 text-sm font-medium text-foreground transition-all hover:border-foreground/20 hover:bg-card/70"
           >
             {siteConfig.hero.secondaryCta}
           </a>
