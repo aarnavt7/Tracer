@@ -217,7 +217,7 @@ export const siteConfig = {
       {
         name: "Safwaan Majid",
         role: "Founder & CEO",
-        bio: "With seven years of robotics experience, Safwaan designed and built Eratos’s physical rover and programmed its autonomous pathfinding system.",
+        bio: "With seven years of robotics experience, Safwaan designed and built Eratos’s physical rover end-to-end and programmed its autonomous pathfinding system.",
         initials: "SM",
         image: {
           src: "/images/team/safwaan-majid.png",
@@ -227,12 +227,12 @@ export const siteConfig = {
       },
       {
         name: "Aarnav Trivedi",
-        role: "Co-founder",
+        role: "Co-founder & CTO",
         bio: "Aarnav conducted physics research at the Naval Research Laboratory and leads Eratos’s sensor integration and subsurface-sensing development.",
         initials: "AT",
         image: {
           src: "/images/team/aarnav-trivedi.png",
-          alt: "Aarnav Trivedi, Co-founder of Eratos Robotics.",
+          alt: "Aarnav Trivedi, Co-founder and CTO of Eratos Robotics.",
           className: "object-cover object-center",
         },
       },
