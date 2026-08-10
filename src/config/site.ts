@@ -217,7 +217,7 @@ export const siteConfig = {
       {
         name: "Safwaan Majid",
         role: "Founder & CEO",
-        bio: "With seven years of robotics experience, Safwaan designed and built Eratos’s physical rover end-to-end and programmed its autonomous pathfinding system.",
+        bio: "Safwaan has seven years of competitive robotics experience and conducted research at NASA. He designed and built Eratos’s physical rover end-to-end and programmed its autonomous pathfinding system.",
         initials: "SM",
         image: {
           src: "/images/team/safwaan-majid.png",
