@@ -50,6 +50,11 @@ export function TeamSection() {
                   <h3 className="font-heading text-xl font-semibold tracking-tight text-foreground">
                     {member.name}
                   </h3>
+                  {member.role && (
+                    <p className="mt-1 font-heading text-xs font-medium uppercase tracking-[0.2em] text-primary">
+                      {member.role}
+                    </p>
+                  )}
                   <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                     {member.bio}
                   </p>

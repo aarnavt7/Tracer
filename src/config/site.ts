@@ -216,6 +216,7 @@ export const siteConfig = {
     members: [
       {
         name: "Safwaan Majid",
+        role: "Founder",
         bio: "Safwaan has seven years of competitive robotics experience and conducted research at NASA. He designed and built Eratos’s physical rover end-to-end and programmed its autonomous pathfinding system.",
         initials: "SM",
         image: {
@@ -226,6 +227,7 @@ export const siteConfig = {
       },
       {
         name: "Aarnav Trivedi",
+        role: "Founder",
         bio: "Aarnav conducted physics research at the Naval Research Laboratory and leads Eratos’s sensor integration and subsurface-sensing development.",
         initials: "AT",
         image: {
@@ -236,6 +238,7 @@ export const siteConfig = {
       },
       {
         name: "Alex Fagel",
+        role: null,
         bio: "A finance student at Dartmouth, Alex leads operations, team coordination, and organizational execution.",
         initials: "AF",
         image: {
@@ -246,6 +249,7 @@ export const siteConfig = {
       },
       {
         name: "Monish Saravana",
+        role: null,
         bio: "A computer science student at Harvard, Monish leads Eratos’s marketing, positioning, and go-to-market strategy.",
         initials: "MS",
         image: {
@@ -256,6 +260,7 @@ export const siteConfig = {
       },
       {
         name: "Pravith Munipalle",
+        role: null,
         bio: "A finance student at Cornell, Pravith leads financial planning, budgeting, and business strategy.",
         initials: "PM",
         image: {
