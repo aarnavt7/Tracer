@@ -216,56 +216,51 @@ export const siteConfig = {
     members: [
       {
         name: "Safwaan Majid",
-        role: "Founder & CEO",
         bio: "Safwaan has seven years of competitive robotics experience and conducted research at NASA. He designed and built Eratos’s physical rover end-to-end and programmed its autonomous pathfinding system.",
         initials: "SM",
         image: {
           src: "/images/team/safwaan-majid.png",
-          alt: "Safwaan Majid, Founder and CEO of Eratos Robotics.",
+          alt: "Portrait of Safwaan Majid.",
           className: "scale-[1.14] object-cover object-center",
         },
       },
       {
         name: "Aarnav Trivedi",
-        role: "Co-founder & CTO",
         bio: "Aarnav conducted physics research at the Naval Research Laboratory and leads Eratos’s sensor integration and subsurface-sensing development.",
         initials: "AT",
         image: {
           src: "/images/team/aarnav-trivedi.png",
-          alt: "Aarnav Trivedi, Co-founder and CTO of Eratos Robotics.",
+          alt: "Portrait of Aarnav Trivedi.",
           className: "object-cover object-center",
         },
       },
       {
         name: "Alex Fagel",
-        role: "COO",
         bio: "A finance student at Dartmouth, Alex leads operations, team coordination, and organizational execution.",
         initials: "AF",
         image: {
           src: "/images/team/alex-fagel.jpeg",
-          alt: "Alex Fagel, COO of Eratos Robotics.",
+          alt: "Portrait of Alex Fagel.",
           className: "object-cover object-center",
         },
       },
       {
         name: "Monish Saravana",
-        role: "CMO",
         bio: "A computer science student at Harvard, Monish leads Eratos’s marketing, positioning, and go-to-market strategy.",
         initials: "MS",
         image: {
           src: "/images/team/monish-saravana.jpeg",
-          alt: "Monish Saravana, CMO of Eratos Robotics.",
+          alt: "Portrait of Monish Saravana.",
           className: "object-cover object-center",
         },
       },
       {
         name: "Pravith Munipalle",
-        role: "CFO",
         bio: "A finance student at Cornell, Pravith leads financial planning, budgeting, and business strategy.",
         initials: "PM",
         image: {
           src: "/images/team/pravith-munipalle.jpeg",
-          alt: "Pravith Munipalle, CFO of Eratos Robotics.",
+          alt: "Portrait of Pravith Munipalle.",
           className: "object-cover object-center",
         },
       },
