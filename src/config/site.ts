@@ -26,6 +26,48 @@ export const siteConfig = {
     secondaryCta: "View technology",
   },
 
+  partnerships: {
+    supporters: [
+      {
+        name: "1517",
+        image: {
+          src: "/images/supporters/1517.png",
+          width: 2560,
+          height: 1340,
+          alt: "1517",
+        },
+      },
+      {
+        name: "Emergent",
+        image: {
+          src: "/images/supporters/emergent.png",
+          width: 622,
+          height: 200,
+          alt: "Emergent",
+        },
+      },
+      {
+        name: "Eigen",
+        image: {
+          src: "/images/supporters/eigen.png",
+          width: 472,
+          height: 78,
+          alt: "Eigen",
+        },
+      },
+    ],
+    backer: {
+      name: "Backed by Founders Inc.",
+      image: {
+        src: "/images/supporters/founders-inc.png",
+        width: 1966,
+        height: 662,
+        alt: "Backed by Founders Inc.",
+      },
+    },
+    designPartner: "Design partner — Bernat’s Associates",
+  },
+
   problem: {
     statement: "Construction teams still dig half-blind.",
     description:
@@ -164,6 +206,68 @@ export const siteConfig = {
         title: "Autonomous path planning",
         description:
           "Coverage-optimal navigation autonomously drives scan patterns across the site, ensuring complete subsurface mapping without manual guidance.",
+      },
+    ],
+  },
+
+  team: {
+    eyebrow: "Team",
+    title: "Meet the team.",
+    members: [
+      {
+        name: "Safwaan Majid",
+        role: "Founder",
+        bio: "Safwaan has seven years of competitive robotics experience and conducted research at NASA. He designed and built Eratos’s physical rover end-to-end and programmed its autonomous pathfinding system.",
+        initials: "SM",
+        image: {
+          src: "/images/team/safwaan-majid.png",
+          alt: "Portrait of Safwaan Majid.",
+          className: "scale-[1.14] object-cover object-center",
+        },
+      },
+      {
+        name: "Aarnav Trivedi",
+        role: "Founder",
+        bio: "Aarnav conducted physics research at the Naval Research Laboratory and leads Eratos’s sensor integration and subsurface-sensing development.",
+        initials: "AT",
+        image: {
+          src: "/images/team/aarnav-trivedi.png",
+          alt: "Portrait of Aarnav Trivedi.",
+          className: "object-cover object-center",
+        },
+      },
+      {
+        name: "Alex Fagel",
+        role: null,
+        bio: "A finance student at Dartmouth, Alex leads operations, team coordination, and organizational execution.",
+        initials: "AF",
+        image: {
+          src: "/images/team/alex-fagel.jpeg",
+          alt: "Portrait of Alex Fagel.",
+          className: "object-cover object-center",
+        },
+      },
+      {
+        name: "Monish Saravana",
+        role: null,
+        bio: "A computer science student at Harvard, Monish leads Eratos’s marketing, positioning, and go-to-market strategy.",
+        initials: "MS",
+        image: {
+          src: "/images/team/monish-saravana.jpeg",
+          alt: "Portrait of Monish Saravana.",
+          className: "object-cover object-center",
+        },
+      },
+      {
+        name: "Pravith Munipalle",
+        role: null,
+        bio: "A finance student at Cornell, Pravith leads financial planning, budgeting, and business strategy.",
+        initials: "PM",
+        image: {
+          src: "/images/team/pravith-munipalle.jpeg",
+          alt: "Portrait of Pravith Munipalle.",
+          className: "object-cover object-center",
+        },
       },
     ],
   },

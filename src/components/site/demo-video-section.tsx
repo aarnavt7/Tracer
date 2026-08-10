@@ -20,7 +20,7 @@ export function DemoVideoSection() {
     <div
       role="region"
       aria-label="Tracer demo video"
-      className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-black/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
+      className="relative overflow-hidden rounded-3xl border border-border bg-card/40 shadow-[inset_0_1px_0_0_var(--inset-highlight)]"
     >
       <div className="relative aspect-[16/10] w-full">
         <video

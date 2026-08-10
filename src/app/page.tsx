@@ -30,6 +30,8 @@ import { HeroSection } from "@/components/site/hero-section";
 import { Navbar } from "@/components/site/navbar";
 import { SectionHeading } from "@/components/site/section-heading";
 import { SubsurfaceMapImage } from "@/components/site/subsurface-map-image";
+import { SupporterStrip } from "@/components/site/supporter-strip";
+import { TeamSection } from "@/components/site/team-section";
 import { siteConfig } from "@/config/site";
 
 const PROBLEM_ICONS = [EyeOff, Clock, AlertTriangle];
@@ -59,6 +61,8 @@ export default function Home() {
       {/* ─── HERO ─────────────────────────────────────────── */}
       <HeroSection />
 
+      <SupporterStrip />
+
       {/* ─── PROBLEM ──────────────────────────────────────── */}
       <section className="relative py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -69,7 +73,7 @@ export default function Home() {
             <h2 className="mt-5 max-w-4xl font-heading text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
               {siteConfig.problem.statement}
             </h2>
-            <div className="relative mt-8 max-w-5xl overflow-hidden rounded-2xl border border-white/[0.06] bg-black/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]">
+            <div className="relative mt-8 max-w-5xl overflow-hidden rounded-2xl border border-border bg-card/40 shadow-[inset_0_1px_0_0_var(--inset-highlight)]">
               <div className="relative aspect-[21/9] w-full sm:aspect-[2.2/1]">
                 <Image
                   src={siteConfig.problem.heroImage.src}
@@ -91,8 +95,8 @@ export default function Home() {
               const Icon = PROBLEM_ICONS[i];
               return (
                 <StaggerItem key={card.title}>
-                  <div className="group h-full rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 transition-all duration-300 hover:border-white/[0.1] hover:bg-white/[0.04]">
-                    <div className="flex size-11 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] text-primary">
+                  <div className="group h-full rounded-2xl border border-border bg-card/40 p-6 transition-all duration-300 hover:border-foreground/15 hover:bg-card/60">
+                    <div className="flex size-11 items-center justify-center rounded-xl border border-border bg-card/70 text-primary">
                       <Icon className="size-5" />
                     </div>
                     <h3 className="mt-5 font-heading text-lg font-medium text-foreground">
@@ -127,9 +131,9 @@ export default function Home() {
               const Icon = STEP_ICONS[i];
               return (
                 <StaggerItem key={step.number}>
-                  <div className="relative h-full rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 transition-all duration-300 hover:border-primary/20 hover:bg-white/[0.04]">
+                  <div className="relative h-full rounded-2xl border border-border bg-card/40 p-6 transition-all duration-300 hover:border-primary/20 hover:bg-card/60">
                     <div className="flex items-center justify-between">
-                      <span className="font-heading text-3xl font-bold text-primary/30">
+                      <span className="how-step-number font-heading text-3xl font-bold text-primary/30">
                         {step.number}
                       </span>
                       <Icon className="size-5 text-primary/60" />
@@ -209,8 +213,8 @@ export default function Home() {
               const Icon = BENEFIT_ICONS[i];
               return (
                 <StaggerItem key={item.title}>
-                  <div className="group flex gap-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 transition-all duration-300 hover:border-white/[0.1] hover:bg-white/[0.04]">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] text-primary">
+                  <div className="group flex gap-5 rounded-2xl border border-border bg-card/40 p-6 transition-all duration-300 hover:border-foreground/15 hover:bg-card/60">
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-border bg-card/70 text-primary">
                       <Icon className="size-5" />
                     </div>
                     <div>
@@ -246,12 +250,12 @@ export default function Home() {
             />
           </AnimatedSection>
 
-          <StaggerContainer className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] md:grid-cols-2 lg:grid-cols-3">
+          <StaggerContainer className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
             {siteConfig.technology.items.map((item, i) => {
               const Icon = TECH_ICONS[i];
               return (
                 <StaggerItem key={item.title}>
-                  <div className="h-full border-b border-r border-white/[0.04] bg-background p-7 transition-colors duration-300 last:border-b-0 hover:bg-white/[0.02] md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0">
+                  <div className="h-full border-b border-r border-border bg-background p-7 transition-colors duration-300 last:border-b-0 hover:bg-card/40 md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0">
                     <Icon className="size-5 text-primary" />
                     <h3 className="mt-4 font-heading text-base font-medium text-foreground">
                       {item.title}
@@ -266,6 +270,8 @@ export default function Home() {
           </StaggerContainer>
         </div>
       </section>
+
+      <TeamSection />
 
       {/* ─── FINAL CTA ────────────────────────────────────── */}
       <section id="contact" className="relative py-16 lg:py-24">
@@ -292,14 +298,14 @@ export default function Home() {
                 href={siteConfig.bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_oklch(0.65_0.18_50_/_0.3)]"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_var(--primary-glow)]"
               >
                 {siteConfig.cta.buttonText}
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
               </a>
               <a
                 href="#technology"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-8 py-3.5 text-sm font-medium text-foreground transition-all hover:border-white/[0.15] hover:bg-white/[0.06]"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card/40 px-8 py-3.5 text-sm font-medium text-foreground transition-all hover:border-foreground/20 hover:bg-card/70"
               >
                 Review the platform
               </a>

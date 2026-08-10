@@ -82,6 +82,74 @@
   --sidebar-accent-foreground: oklch(0.90 0.005 50);
   --sidebar-border: oklch(1 0 0 / 8%);
   --sidebar-ring: oklch(0.65 0.18 50);
+  --body-glow-top: oklch(0.12 0.025 258);
+  --body-glow-side: oklch(0.1 0.03 250 / 0.4);
+  --mesh-line: oklch(0.3 0.02 50 / 0.12);
+  --gradient-start: oklch(0.7 0.17 48);
+  --gradient-middle: oklch(0.76 0.14 38);
+  --gradient-end: oklch(0.62 0.16 52);
+  --primary-glow: oklch(0.65 0.18 50 / 0.3);
+  --inset-highlight: oklch(1 0 0 / 4%);
+  --panel-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.5);
+  --hero-scrim: radial-gradient(
+    ellipse 78% 88% at 50% 16%,
+    oklch(0.055 0.022 260 / 0.78) 0%,
+    oklch(0.075 0.018 260 / 0.42) 42%,
+    transparent 76%
+  );
+  --hero-title-shadow:
+    0 2px 28px oklch(0.06 0.02 260 / 0.95), 0 1px 3px
+    oklch(0.04 0.02 260 / 0.85);
+}
+
+[data-theme="light"] {
+  --background: oklch(0.985 0 0);
+  --foreground: oklch(0.17 0 0);
+  --card: oklch(0.94 0 0);
+  --card-foreground: oklch(0.17 0 0);
+  --popover: oklch(0.98 0 0);
+  --popover-foreground: oklch(0.17 0 0);
+  --primary: oklch(0.56 0.17 48);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.92 0 0);
+  --secondary-foreground: oklch(0.22 0 0);
+  --muted: oklch(0.91 0 0);
+  --muted-foreground: oklch(0.42 0 0);
+  --accent: oklch(0.56 0.17 48);
+  --accent-foreground: oklch(0.985 0 0);
+  --border: oklch(0.2 0 0 / 16%);
+  --input: oklch(0.2 0 0 / 22%);
+  --ring: oklch(0.56 0.17 48);
+  --chart-1: oklch(0.25 0 0);
+  --chart-2: oklch(0.38 0 0);
+  --chart-3: oklch(0.5 0 0);
+  --chart-4: oklch(0.62 0 0);
+  --chart-5: oklch(0.74 0 0);
+  --sidebar: oklch(0.97 0 0);
+  --sidebar-foreground: oklch(0.17 0 0);
+  --sidebar-primary: oklch(0.56 0.17 48);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.92 0 0);
+  --sidebar-accent-foreground: oklch(0.22 0 0);
+  --sidebar-border: oklch(0.2 0 0 / 16%);
+  --sidebar-ring: oklch(0.56 0.17 48);
+  --body-glow-top: oklch(0.93 0 0);
+  --body-glow-side: oklch(0.88 0 0 / 0.35);
+  --mesh-line: oklch(0.3 0 0 / 0.1);
+  --gradient-start: oklch(0.58 0.17 48);
+  --gradient-middle: oklch(0.64 0.15 38);
+  --gradient-end: oklch(0.52 0.16 52);
+  --primary-glow: oklch(0.56 0.17 48 / 0.25);
+  --inset-highlight: oklch(1 0 0 / 80%);
+  --panel-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.14);
+  --hero-scrim: radial-gradient(
+    ellipse 78% 88% at 50% 16%,
+    oklch(0.985 0 0 / 0.88) 0%,
+    oklch(0.965 0 0 / 0.58) 42%,
+    transparent 76%
+  );
+  --hero-title-shadow:
+    0 2px 28px oklch(1 0 0 / 0.9), 0 1px 3px oklch(1 0 0 / 0.8);
 }
 
 @layer base {
@@ -90,8 +158,8 @@
   }
 
   ::selection {
-    background: oklch(0.65 0.18 50 / 0.35);
-    color: oklch(0.98 0 0);
+    background: color-mix(in oklch, var(--primary) 35%, transparent);
+    color: var(--primary-foreground);
   }
 
   html {
@@ -101,10 +169,10 @@
   body {
     @apply bg-background text-foreground antialiased;
     background-image:
-      radial-gradient(ellipse at top, oklch(0.12 0.025 258) 0%, transparent 50%),
+      radial-gradient(ellipse at top, var(--body-glow-top) 0%, transparent 50%),
       radial-gradient(
         ellipse at 80% 20%,
-        oklch(0.10 0.03 250 / 0.4) 0%,
+        var(--body-glow-side) 0%,
         transparent 40%
       );
     background-attachment: fixed;
@@ -117,21 +185,14 @@
 
 @layer utilities {
   .glass-panel {
-    @apply border border-white/[0.06] bg-white/[0.03] shadow-[0_8px_32px_-8px_rgba(0,0,0,0.5)] backdrop-blur-xl;
+    @apply border border-border bg-card/40 backdrop-blur-xl;
+    box-shadow: var(--panel-shadow);
   }
 
   .mesh-background {
     background-image:
-      linear-gradient(
-        to right,
-        oklch(0.3 0.02 50 / 0.12) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        oklch(0.3 0.02 50 / 0.12) 1px,
-        transparent 1px
-      );
+      linear-gradient(to right, var(--mesh-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--mesh-line) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
@@ -139,9 +200,9 @@
     /* Slightly cooler gold than rover wheels / grid orange for clearer separation */
     background-image: linear-gradient(
       135deg,
-      oklch(0.7 0.17 48) 0%,
-      oklch(0.76 0.14 38) 48%,
-      oklch(0.62 0.16 52) 100%
+      var(--gradient-start) 0%,
+      var(--gradient-middle) 48%,
+      var(--gradient-end) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -150,8 +211,41 @@
 
   .glow-orange {
     box-shadow:
-      0 0 20px oklch(0.65 0.18 50 / 0.15),
-      0 0 60px oklch(0.65 0.18 50 / 0.05);
+      0 0 20px color-mix(in oklch, var(--primary) 15%, transparent),
+      0 0 60px color-mix(in oklch, var(--primary) 5%, transparent);
+  }
+
+  .hero-scrim {
+    background: var(--hero-scrim);
+  }
+
+  .hero-title-secondary {
+    text-shadow: var(--hero-title-shadow);
+  }
+
+  .supporter-logo {
+    filter: grayscale(1) invert(1) contrast(1.25);
+    mix-blend-mode: screen;
+    opacity: 0.92;
+  }
+
+  [data-theme="light"] .supporter-logo {
+    filter: grayscale(1) contrast(1.6);
+    mix-blend-mode: multiply;
+    opacity: 0.9;
+  }
+
+  [data-theme="light"] .site-navbar:not(.site-navbar-scrolled) {
+    background: var(--background);
+  }
+
+  [data-theme="light"] .hero-rover canvas {
+    filter: saturate(1.35) contrast(0.9);
+    opacity: 0.42;
+  }
+
+  [data-theme="light"] .how-step-number {
+    color: color-mix(in oklch, var(--primary) 78%, var(--foreground));
   }
 }
 
