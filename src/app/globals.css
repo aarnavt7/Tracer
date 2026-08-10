@@ -224,15 +224,19 @@
   }
 
   .supporter-logo {
-    filter: grayscale(1) invert(1) contrast(1.1);
+    filter: grayscale(1) invert(1) contrast(1.25);
     mix-blend-mode: screen;
-    opacity: 0.8;
+    opacity: 0.92;
   }
 
   [data-theme="light"] .supporter-logo {
-    filter: grayscale(1) contrast(1.2);
+    filter: grayscale(1) contrast(1.6);
     mix-blend-mode: multiply;
-    opacity: 0.75;
+    opacity: 0.9;
+  }
+
+  [data-theme="light"] .site-navbar:not(.site-navbar-scrolled) {
+    background: var(--background);
   }
 
   [data-theme="light"] .hero-rover canvas {

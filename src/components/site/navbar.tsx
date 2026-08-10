@@ -21,9 +21,9 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 right-0 left-0 z-50 transition-all duration-500",
+        "site-navbar fixed top-0 right-0 left-0 z-50 transition-all duration-500",
         scrolled
-          ? "border-b border-border bg-background/80 backdrop-blur-2xl"
+          ? "site-navbar-scrolled border-b border-border bg-background/80 backdrop-blur-2xl"
           : "bg-transparent",
       )}
     >
