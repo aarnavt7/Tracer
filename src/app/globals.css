@@ -223,25 +223,31 @@
     text-shadow: var(--hero-title-shadow);
   }
 
+  /* Logos are pre-processed white-on-transparent marks (supporters/mono/),
+     so dark theme needs no filter and light theme is a clean invert. */
   .supporter-logo {
-    filter: grayscale(1) invert(1) contrast(1.25);
-    mix-blend-mode: screen;
-    opacity: 0.92;
+    opacity: 0.82;
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  .supporter-logo:hover {
+    opacity: 1;
+    transform: translateY(-2px);
   }
 
   [data-theme="light"] .supporter-logo {
-    filter: grayscale(1) contrast(1.6);
-    mix-blend-mode: multiply;
-    opacity: 0.9;
+    filter: invert(1);
+    opacity: 0.72;
+  }
+
+  [data-theme="light"] .supporter-logo:hover {
+    opacity: 0.95;
   }
 
   [data-theme="light"] .site-navbar:not(.site-navbar-scrolled) {
     background: var(--background);
-  }
-
-  [data-theme="light"] .hero-rover canvas {
-    filter: saturate(1.35) contrast(0.9);
-    opacity: 0.42;
   }
 
   [data-theme="light"] .how-step-number {

@@ -27,45 +27,47 @@ export const siteConfig = {
   },
 
   partnerships: {
-    supporters: [
+    label: "Backed by",
+    /* White-on-transparent marks generated from the original brand assets
+       (see public/images/supporters/mono/). displayHeight puts the mixed
+       lockups on one optical line. */
+    backers: [
       {
         name: "1517",
-        image: {
-          src: "/images/supporters/1517.png",
-          width: 2560,
-          height: 1340,
-          alt: "1517",
-        },
+        src: "/images/supporters/mono/1517.png",
+        width: 1836,
+        height: 757,
+        displayHeight: 40,
       },
       {
-        name: "Emergent",
-        image: {
-          src: "/images/supporters/emergent.png",
-          width: 622,
-          height: 200,
-          alt: "Emergent",
-        },
+        name: "Mercatus Center — Emergent Ventures",
+        src: "/images/supporters/mono/emergent.png",
+        width: 584,
+        height: 181,
+        displayHeight: 52,
       },
       {
-        name: "Eigen",
-        image: {
-          src: "/images/supporters/eigen.png",
-          width: 472,
-          height: 78,
-          alt: "Eigen",
-        },
+        name: "Founders, Inc.",
+        src: "/images/supporters/mono/founders-inc.png",
+        width: 1699,
+        height: 485,
+        displayHeight: 46,
+      },
+      {
+        name: "The Eigenprize",
+        src: "/images/supporters/mono/eigen.png",
+        width: 434,
+        height: 46,
+        displayHeight: 21,
+      },
+      {
+        name: "Johnson Bernat Associates, Inc.",
+        src: "/images/supporters/mono/jba.png",
+        width: 930,
+        height: 175,
+        displayHeight: 42,
       },
     ],
-    backer: {
-      name: "Backed by Founders Inc.",
-      image: {
-        src: "/images/supporters/founders-inc.png",
-        width: 1966,
-        height: 662,
-        alt: "Backed by Founders Inc.",
-      },
-    },
-    designPartner: "Design partner — Bernat’s Associates",
   },
 
   problem: {
@@ -228,17 +230,17 @@ export const siteConfig = {
       {
         name: "Aarnav Trivedi",
         role: "Founder",
-        bio: "Aarnav conducted physics research at the Naval Research Laboratory and leads Eratos’s sensor integration and subsurface-sensing development.",
+        bio: "Aarnav conducted physics research at the Naval Research Laboratory and leads Eratos’s sensor integration and subsurface-sensing development. He programmed the rover’s software suite end-to-end — from onboard data acquisition and signal processing to the mapping and deliverable pipeline — and connected it with the platform’s integrated hardware components into one unified system.",
         initials: "AT",
         image: {
-          src: "/images/team/aarnav-trivedi.png",
+          src: "/images/team/aarnav-trivedi-2026.png",
           alt: "Portrait of Aarnav Trivedi.",
-          className: "object-cover object-center",
+          className: "object-cover object-[center_30%]",
         },
       },
       {
         name: "Alex Fagel",
-        role: null,
+        role: "COO",
         bio: "A finance student at Dartmouth, Alex leads operations, team coordination, and organizational execution.",
         initials: "AF",
         image: {
@@ -249,7 +251,7 @@ export const siteConfig = {
       },
       {
         name: "Monish Saravana",
-        role: null,
+        role: "CMO",
         bio: "A computer science student at Harvard, Monish leads Eratos’s marketing, positioning, and go-to-market strategy.",
         initials: "MS",
         image: {
@@ -260,7 +262,7 @@ export const siteConfig = {
       },
       {
         name: "Pravith Munipalle",
-        role: null,
+        role: "CFO",
         bio: "A finance student at Cornell, Pravith leads financial planning, budgeting, and business strategy.",
         initials: "PM",
         image: {

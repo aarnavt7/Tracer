@@ -1,9 +1,81 @@
 "use client";
 
-import { ContactShadows, Environment, Grid } from "@react-three/drei";
+import {
+  ContactShadows,
+  Environment,
+  Grid,
+  useEnvironment,
+} from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import {
+  Suspense,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import * as THREE from "three";
+
+type SceneTheme = "dark" | "light";
+
+/** Self-hosted HDR (instead of drei's `preset`, which fetches from a
+ *  third-party CDN at runtime and blocks the scene's first frame). */
+const ENV_HDR = "/hdr/warehouse_1k.hdr";
+
+if (typeof window !== "undefined") {
+  useEnvironment.preload({ files: ENV_HDR });
+}
+
+/** Per-theme scene palette so the canvas matches the site background instead of
+ *  being faded/filtered via CSS. */
+const SCENE_THEMES = {
+  dark: {
+    background: "#020204",
+    terrain: "#040406",
+    gridCell: "#252028",
+    gridSection: "#3d3028",
+    ambientIntensity: 0.28,
+    ambientColor: "#c4cad8",
+    fillIntensity: 0.32,
+    fillColor: "#8898ac",
+    contactShadowColor: "#020204",
+    contactShadowOpacity: 0.22,
+    envIntensity: 0.3,
+    sky: true,
+  },
+  light: {
+    background: "#f5f4f1",
+    terrain: "#e9e6e1",
+    gridCell: "#d8d2c9",
+    gridSection: "#c09b79",
+    ambientIntensity: 0.85,
+    ambientColor: "#ffffff",
+    fillIntensity: 0.5,
+    fillColor: "#c8cdd6",
+    contactShadowColor: "#4a4238",
+    contactShadowOpacity: 0.34,
+    envIntensity: 0.55,
+    sky: false,
+  },
+} as const;
+
+/** Tracks the site theme set by ThemeToggle via `data-theme` on <html>. */
+function useSiteTheme(): SceneTheme {
+  const [theme, setTheme] = useState<SceneTheme>("dark");
+
+  useEffect(() => {
+    const el = document.documentElement;
+    const read = () =>
+      setTheme(el.dataset.theme === "light" ? "light" : "dark");
+    read();
+    const observer = new MutationObserver(read);
+    observer.observe(el, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+  }, []);
+
+  return theme;
+}
 
 const C = {
   body: "#4a4a54",
@@ -500,7 +572,7 @@ function Starfield() {
   );
 }
 
-function Terrain() {
+function Terrain({ color }: { color: string }) {
   const meshRef = useRef<THREE.Mesh>(null);
 
   useEffect(() => {
@@ -531,7 +603,7 @@ function Terrain() {
       receiveShadow
     >
       <planeGeometry args={[50, 50, 100, 100]} />
-      <meshStandardMaterial color="#040406" roughness={0.95} metalness={0.05} />
+      <meshStandardMaterial color={color} roughness={0.95} metalness={0.05} />
     </mesh>
   );
 }
@@ -969,7 +1041,13 @@ function PaintSpray() {
   );
 }
 
-function FloorGrid() {
+function FloorGrid({
+  cellColor,
+  sectionColor,
+}: {
+  cellColor: string;
+  sectionColor: string;
+}) {
   return (
     <Grid
       position={[0, 0.018, 0]}
@@ -981,15 +1059,16 @@ function FloorGrid() {
       sectionSize={3.2}
       cellThickness={0.55}
       sectionThickness={0.95}
-      cellColor="#252028"
-      sectionColor="#3d3028"
+      cellColor={cellColor}
+      sectionColor={sectionColor}
     />
   );
 }
 
 /* ═══ SCENE ═══ */
 
-function InteractiveScene() {
+function InteractiveScene({ theme }: { theme: SceneTheme }) {
+  const palette = SCENE_THEMES[theme];
   const groupRef = useRef<THREE.Group>(null);
   const keyLightRef = useRef<THREE.DirectionalLight>(null);
   const mouse = useRef({ x: 0, y: 0 });
@@ -1061,10 +1140,13 @@ function InteractiveScene() {
 
   return (
     <>
-      <color attach="background" args={["#020204"]} />
-      <fog attach="fog" args={["#020204", 14, 48]} />
+      <color attach="background" args={[palette.background]} />
+      <fog attach="fog" args={[palette.background, 14, 48]} />
 
-      <ambientLight intensity={0.28} color="#c4cad8" />
+      <ambientLight
+        intensity={palette.ambientIntensity}
+        color={palette.ambientColor}
+      />
       <directionalLight
         ref={keyLightRef}
         castShadow
@@ -1074,8 +1156,8 @@ function InteractiveScene() {
       />
       <directionalLight
         position={[-3, 4, -2]}
-        intensity={0.32}
-        color="#8898ac"
+        intensity={palette.fillIntensity}
+        color={palette.fillColor}
       />
       <pointLight
         position={[0, 0.5, 0]}
@@ -1103,14 +1185,17 @@ function InteractiveScene() {
         intensity={0.42}
         color="#cec6be"
       />
-      <directionalLight
-        position={[12, 10, -18]}
-        intensity={0.12}
-        color="#e8dcc8"
-      />
-
-      <Starfield />
-      <Moon />
+      {palette.sky && (
+        <>
+          <directionalLight
+            position={[12, 10, -18]}
+            intensity={0.12}
+            color="#e8dcc8"
+          />
+          <Starfield />
+          <Moon />
+        </>
+      )}
 
       <group ref={groupRef}>
         <RoverModel />
@@ -1123,43 +1208,76 @@ function InteractiveScene() {
       <RadarSweep />
       <PaintedUtilities />
 
-      <Terrain />
-      <FloorGrid />
+      <Terrain color={palette.terrain} />
+      <FloorGrid
+        cellColor={palette.gridCell}
+        sectionColor={palette.gridSection}
+      />
 
       <ContactShadows
         position={[0, -0.01, 0]}
-        opacity={0.22}
+        opacity={palette.contactShadowOpacity}
         blur={2}
         far={3}
-        color="#020204"
+        color={palette.contactShadowColor}
       />
 
-      <Environment preset="warehouse" environmentIntensity={0.3} />
+      {/* Own Suspense boundary: the HDR load must not hold back the rest of
+          the scene, which has no async assets and can render on frame one. */}
+      <Suspense fallback={null}>
+        <Environment
+          files={ENV_HDR}
+          environmentIntensity={palette.envIntensity}
+        />
+      </Suspense>
     </>
   );
 }
 
+/** Flips `onReady` once the first frame actually renders, so the canvas can
+ *  fade in only when there is real content behind it. */
+function FirstFrameNotifier({ onReady }: { onReady: () => void }) {
+  const notified = useRef(false);
+  useFrame(() => {
+    if (!notified.current) {
+      notified.current = true;
+      onReady();
+    }
+  });
+  return null;
+}
+
 export function RoverScene() {
+  const theme = useSiteTheme();
+  const [ready, setReady] = useState(false);
+
   return (
-    <Canvas
-      shadows
-      camera={{ position: [2, 1.05, 4.65], fov: 30, near: 0.1, far: 100 }}
-      dpr={[1, 1.75]}
-      gl={{
-        antialias: true,
-        powerPreference: "high-performance",
-        toneMapping: THREE.ACESFilmicToneMapping,
-        toneMappingExposure: 1.05,
-        outputColorSpace: THREE.SRGBColorSpace,
-      }}
-      onCreated={({ gl }) => {
-        gl.shadowMap.enabled = true;
-        gl.shadowMap.type = THREE.PCFSoftShadowMap;
-      }}
+    <div
+      className={`h-full w-full transition-opacity duration-700 ease-out ${
+        ready ? "opacity-100" : "opacity-0"
+      }`}
     >
-      <Suspense fallback={null}>
-        <InteractiveScene />
-      </Suspense>
-    </Canvas>
+      <Canvas
+        shadows
+        camera={{ position: [2, 1.05, 4.65], fov: 30, near: 0.1, far: 100 }}
+        dpr={[1, 1.75]}
+        gl={{
+          antialias: true,
+          powerPreference: "high-performance",
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.05,
+          outputColorSpace: THREE.SRGBColorSpace,
+        }}
+        onCreated={({ gl }) => {
+          gl.shadowMap.enabled = true;
+          gl.shadowMap.type = THREE.PCFSoftShadowMap;
+        }}
+      >
+        <FirstFrameNotifier onReady={() => setReady(true)} />
+        <Suspense fallback={null}>
+          <InteractiveScene theme={theme} />
+        </Suspense>
+      </Canvas>
+    </div>
   );
 }

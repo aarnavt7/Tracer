@@ -86,6 +86,14 @@ export default function RootLayout({
       className={`scroll-smooth ${bodyFont.variable} ${headingFont.variable}`}
     >
       <body>
+        {/* Start the hero HDR download alongside the initial JS instead of
+            after the three.js chunk mounts (hoisted into <head> by React). */}
+        <link
+          rel="preload"
+          href="/hdr/warehouse_1k.hdr"
+          as="fetch"
+          crossOrigin="anonymous"
+        />
         <Script id="eratos-theme" strategy="beforeInteractive">
           {themeScript}
         </Script>
