@@ -155,12 +155,11 @@ export const siteConfig = {
     ],
   },
 
-  demoVideo: {
-    overlayEyebrow: "Demo",
-    overlayTitle: "Tracer in motion",
-    overlayCaption:
-      "Autonomous traversal and subsurface sensing on site — the same rover-first workflow, in action.",
-    src: "/videos/TracerDemoVideo.mp4",
+  /** Technical whitepaper — PDF in public/docs. */
+  whitepaper: {
+    documentTitle:
+      "Tracer: An Integrated Autonomous Sensing System for Pre-Dig Subsurface Utility Mapping",
+    pdfUrl: "/docs/tracer-whitepaper.pdf",
   },
 
   /** CAD/GIS-style maps in the subsurface section, shown side by side (MapImage1, MapImage3). */
@@ -236,39 +235,6 @@ export const siteConfig = {
           src: "/images/team/aarnav-trivedi-2026.png",
           alt: "Portrait of Aarnav Trivedi.",
           className: "object-cover object-[center_30%]",
-        },
-      },
-      {
-        name: "Alex Fagel",
-        role: "COO",
-        bio: "A finance student at Dartmouth, Alex leads operations, team coordination, and organizational execution.",
-        initials: "AF",
-        image: {
-          src: "/images/team/alex-fagel.jpeg",
-          alt: "Portrait of Alex Fagel.",
-          className: "object-cover object-center",
-        },
-      },
-      {
-        name: "Monish Saravana",
-        role: "CMO",
-        bio: "A computer science student at Harvard, Monish leads Eratos’s marketing, positioning, and go-to-market strategy.",
-        initials: "MS",
-        image: {
-          src: "/images/team/monish-saravana.jpeg",
-          alt: "Portrait of Monish Saravana.",
-          className: "object-cover object-center",
-        },
-      },
-      {
-        name: "Pravith Munipalle",
-        role: "CFO",
-        bio: "A finance student at Cornell, Pravith leads financial planning, budgeting, and business strategy.",
-        initials: "PM",
-        image: {
-          src: "/images/team/pravith-munipalle.jpeg",
-          alt: "Portrait of Pravith Munipalle.",
-          className: "object-cover object-center",
         },
       },
     ],

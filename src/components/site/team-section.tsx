@@ -20,7 +20,7 @@ export function TeamSection() {
           <SectionHeading eyebrow={team.eyebrow} title={team.title} />
         </AnimatedSection>
 
-        <StaggerContainer className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <StaggerContainer className="mt-16 grid max-w-4xl gap-6 sm:grid-cols-2">
           {team.members.map((member) => (
             <StaggerItem key={member.name}>
               <article className="h-full overflow-hidden rounded-2xl border border-border bg-card/40">

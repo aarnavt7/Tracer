@@ -24,7 +24,6 @@ import {
   StaggerContainer,
   StaggerItem,
 } from "@/components/site/animated-section";
-import { DemoVideoSection } from "@/components/site/demo-video-section";
 import { Footer } from "@/components/site/footer";
 import { HeroSection } from "@/components/site/hero-section";
 import { Navbar } from "@/components/site/navbar";
@@ -32,6 +31,7 @@ import { SectionHeading } from "@/components/site/section-heading";
 import { SubsurfaceMapImage } from "@/components/site/subsurface-map-image";
 import { SupporterStrip } from "@/components/site/supporter-strip";
 import { TeamSection } from "@/components/site/team-section";
+import { WhitepaperEmbed } from "@/components/site/whitepaper-embed";
 import { siteConfig } from "@/config/site";
 
 const PROBLEM_ICONS = [EyeOff, Clock, AlertTriangle];
@@ -205,7 +205,7 @@ export default function Home() {
           </AnimatedSection>
 
           <AnimatedSection className="mt-14 lg:mt-16" delay={0.08}>
-            <DemoVideoSection />
+            <WhitepaperEmbed />
           </AnimatedSection>
 
           <StaggerContainer className="mt-14 grid gap-6 md:grid-cols-2 lg:mt-16">
