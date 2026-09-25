@@ -17,10 +17,14 @@ export function TeamSection() {
 
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <AnimatedSection>
-          <SectionHeading eyebrow={team.eyebrow} title={team.title} />
+          <SectionHeading
+            eyebrow={team.eyebrow}
+            title={team.title}
+            align="center"
+          />
         </AnimatedSection>
 
-        <StaggerContainer className="mt-16 grid max-w-4xl gap-6 sm:grid-cols-2">
+        <StaggerContainer className="mx-auto mt-16 grid max-w-4xl gap-6 sm:grid-cols-2">
           {team.members.map((member) => (
             <StaggerItem key={member.name}>
               <article className="h-full overflow-hidden rounded-2xl border border-border bg-card/40">
