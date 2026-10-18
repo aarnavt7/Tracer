@@ -73,9 +73,7 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.9 }}
         >
           <a
-            href={siteConfig.whitepaper.pdfUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#whitepaper"
             className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-primary px-9 py-4 text-base font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_var(--primary-glow)]"
           >
             {siteConfig.hero.primaryCta}

@@ -7,7 +7,10 @@ const EMBED_URL = `${whitepaper.pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=Fi
 
 export function WhitepaperEmbed() {
   return (
-    <div className="overflow-hidden rounded-3xl border border-border bg-card/40 shadow-[inset_0_1px_0_0_var(--inset-highlight)]">
+    <div
+      id="whitepaper"
+      className="scroll-mt-24 overflow-hidden rounded-3xl border border-border bg-card/40 shadow-[inset_0_1px_0_0_var(--inset-highlight)]"
+    >
       <object
         data={EMBED_URL}
         type="application/pdf"
