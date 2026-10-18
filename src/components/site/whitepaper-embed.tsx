@@ -41,7 +41,7 @@ export function WhitepaperEmbed() {
         href={whitepaper.pdfUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute right-6 bottom-4 inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-medium text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-[0_0_24px_var(--primary-glow)]"
+        className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-xs font-medium text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-[0_0_24px_var(--primary-glow)]"
       >
         Open in new tab
         <ExternalLink className="size-3.5" />
