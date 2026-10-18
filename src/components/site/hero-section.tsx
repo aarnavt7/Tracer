@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ChevronDown, FileText } from "lucide-react";
 import dynamic from "next/dynamic";
 
 import { siteConfig } from "@/config/site";
@@ -67,23 +67,23 @@ export function HeroSection() {
 
         {/* CTAs */}
         <motion.div
-          className="mt-8 flex flex-col gap-3 sm:flex-row"
+          className="mt-10 flex flex-col gap-4 sm:flex-row"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.9 }}
         >
           <a
-            href={siteConfig.bookingUrl}
+            href={siteConfig.whitepaper.pdfUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_var(--primary-glow)]"
+            className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-primary px-9 py-4 text-base font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_var(--primary-glow)]"
           >
             {siteConfig.hero.primaryCta}
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+            <FileText className="size-5 transition-transform group-hover:-translate-y-0.5" />
           </a>
           <a
             href="#technology"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card/40 px-7 py-3 text-sm font-medium text-foreground transition-all hover:border-foreground/20 hover:bg-card/70"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card/40 px-9 py-4 text-base font-medium text-foreground transition-all hover:border-foreground/20 hover:bg-card/70"
           >
             {siteConfig.hero.secondaryCta}
           </a>

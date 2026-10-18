@@ -9,14 +9,8 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       lerp: 0.1,
       duration: 1.2,
       smoothWheel: true,
+      autoRaf: true,
     });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
 
     return () => {
       lenis.destroy();

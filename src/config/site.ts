@@ -8,7 +8,7 @@ export const siteConfig = {
   productName: "Tracer",
   domain: "eratosrobotics.com",
   contactEmail: "hello@eratosrobotics.com",
-  /** Cal.com — hero “Request a demo”, contact CTA, navbar “Talk to us”. */
+  /** Cal.com — contact CTA, navbar “Talk to us”. */
   bookingUrl: "https://cal.com/aarnavt",
 
   navigation: [
@@ -22,7 +22,7 @@ export const siteConfig = {
     headline: ["See below.", "Dig with confidence."],
     description:
       "Autonomous pre-dig subsurface intelligence for private-site excavation.",
-    primaryCta: "Request a demo",
+    primaryCta: "Read our whitepaper",
     secondaryCta: "View technology",
   },
 
@@ -52,13 +52,6 @@ export const siteConfig = {
         width: 1699,
         height: 485,
         displayHeight: 46,
-      },
-      {
-        name: "The Eigenprize",
-        src: "/images/supporters/mono/eigen.png",
-        width: 434,
-        height: 46,
-        displayHeight: 21,
       },
       {
         name: "Johnson Bernat Associates, Inc.",

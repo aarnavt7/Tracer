@@ -1250,9 +1250,24 @@ function FirstFrameNotifier({ onReady }: { onReady: () => void }) {
 export function RoverScene() {
   const theme = useSiteTheme();
   const [ready, setReady] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(true);
+
+  // Stop rendering once the hero scrolls out of view — otherwise the whole
+  // scene (plus contact shadows) keeps redrawing every frame behind the page.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) =>
+      setInView(entry.isIntersecting),
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div
+      ref={containerRef}
       className={`h-full w-full transition-opacity duration-700 ease-out ${
         ready ? "opacity-100" : "opacity-0"
       }`}
@@ -1260,7 +1275,8 @@ export function RoverScene() {
       <Canvas
         shadows
         camera={{ position: [2, 1.05, 4.65], fov: 30, near: 0.1, far: 100 }}
-        dpr={[1, 1.75]}
+        frameloop={inView ? "always" : "never"}
+        dpr={[1, 1.5]}
         gl={{
           antialias: true,
           powerPreference: "high-performance",

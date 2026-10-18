@@ -168,6 +168,16 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+  }
+
+  /* Fixed glow on its own layer — `background-attachment: fixed` on body
+     forces a full-page repaint on every scroll frame. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
     background-image:
       radial-gradient(ellipse at top, var(--body-glow-top) 0%, transparent 50%),
       radial-gradient(
@@ -175,7 +185,6 @@
         var(--body-glow-side) 0%,
         transparent 40%
       );
-    background-attachment: fixed;
   }
 
   a {
